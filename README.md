@@ -22,6 +22,38 @@ This repository contains two independent extensions:
 - No analytics, telemetry, ads, accounts, or remote code.
 - No user data is transmitted by either extension.
 
+## Browser extension — install from GitHub
+
+The browser extension can be installed directly from this repository without
+using the Chrome Web Store.
+
+1. On GitHub, choose **Code > Download ZIP**, or clone the repository with Git.
+2. Extract the ZIP if you downloaded it.
+3. Open `chrome://extensions/` in Chrome or `brave://extensions/` in Brave.
+4. Enable **Developer mode**.
+5. Choose **Load unpacked**.
+6. Select the repository's `browser-extension` folder.
+7. If ChatGPT was already open, reload the ChatGPT tab once.
+
+Manual GitHub installations do **not** update automatically. To update, download
+or pull the latest repository version, click **Reload** for the extension on the
+browser's extensions page, then reload any already-open ChatGPT tabs.
+
+## Browser extension — usage
+
+1. Open `https://chatgpt.com/` and use ChatGPT normally.
+2. Click the extension icon to open its settings.
+3. Enable or disable completion sounds.
+4. Select one of the seven bundled sounds.
+5. Adjust the volume. Changing the sound or volume automatically previews it.
+6. Use **Test** to play the currently selected sound at any time.
+7. Send a prompt. When that response finishes generating, the selected sound is
+   played.
+
+If you navigate to another existing ChatGPT conversation while a response is
+still generating, tracking for that response is cancelled. This prevents stale
+state from causing a notification in the wrong conversation.
+
 ## Privacy model
 
 The browser extension observes ChatGPT UI state locally and stores only its
@@ -33,11 +65,6 @@ watches local App Server lifecycle records needed to detect
 Codex log contents.
 
 See [PRIVACY.md](PRIVACY.md) for the complete policy.
-
-## Browser extension update note
-
-If ChatGPT was already open when the browser extension was updated, reload that
-ChatGPT tab once so the current content script is loaded.
 
 ## Build
 
@@ -64,3 +91,4 @@ MIT. See [LICENSE](LICENSE).
 
 This project is unofficial and is not affiliated with or endorsed by OpenAI.
 See [NOTICE.md](NOTICE.md).
+
