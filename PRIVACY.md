@@ -20,8 +20,7 @@ The browser extension:
 - Does not read or transmit conversation text for analytics or storage.
 - Stores only extension preferences such as enabled state, sound choice,
   volume, and internal timing values in `chrome.storage.local`.
-- Uses the `offscreen` permission only to play the bundled local WAV file
-  after completion.
+- Uses the `offscreen` permission only to play bundled local WAV files.
 - Makes no network requests of its own.
 
 ## VS Code extension
@@ -29,16 +28,16 @@ The browser extension:
 The VS Code extension:
 
 - Runs locally in the VS Code UI extension host.
-- Reads Codex JSONL session files under the local Codex home directory,
-  normally `~/.codex/sessions`, in read-only mode.
-- Parses appended JSON records to identify VS Code-originated sessions and
-  task-completion events.
-- Does not modify Codex session files.
-- Does not upload, transmit, log, or retain session content outside the
-  existing Codex files.
+- Opens the local Codex database `~/.codex/logs_2.sqlite` in read-only mode.
+- Polls newly appended rows from the Codex `logs` table and uses local
+  App Server lifecycle records to detect `turn/started` and `turn/completed`.
+- Does not modify the Codex database.
+- Does not upload, transmit, or independently retain Codex log contents.
 - Stores only extension preferences in VS Code extension `globalState`.
-- Stores locally generated volume-scaled copies of the bundled notification
-  WAV files in the extension's VS Code global storage directory.
+- Stores locally generated volume-scaled copies of bundled notification WAV
+  files in the extension's VS Code global storage directory.
+- Uses a small local temporary lock file containing only process information
+  to prevent duplicate notification playback across multiple VS Code windows.
 - Makes no network requests of its own.
 
 ## Data retention
@@ -46,15 +45,16 @@ The VS Code extension:
 The project does not operate a server and therefore has no server-side data
 retention.
 
-Local extension settings remain on the user's device until removed by the
-browser/VS Code profile or extension data cleanup.
+Local extension settings and generated local audio-cache files remain on the
+user's device until removed by the browser/VS Code profile, extension cleanup,
+or normal temporary-file cleanup.
 
 ## Third parties
 
-The extensions do not send data to OpenAI, the project maintainer, advertisers,
-analytics providers, or any other third party. ChatGPT and Codex themselves may
-communicate with OpenAI as part of their normal operation; that communication
-is outside this extension's control.
+The extensions do not send data to OpenAI, the project maintainer,
+advertisers, analytics providers, or any other third party. ChatGPT and Codex
+themselves may communicate with OpenAI as part of their normal operation; that
+communication is outside this extension's control.
 
 ## Changes
 
@@ -63,5 +63,6 @@ release notes.
 
 ## Contact
 
-Use the public repository's issue tracker after replacing the repository
-placeholder during release configuration.
+For non-sensitive questions or bugs, use the public repository issue tracker.
+For security vulnerabilities, use the repository's GitHub Private vulnerability
+reporting feature.
