@@ -9,6 +9,15 @@ function isVscodeSessionMeta(obj) {
   );
 }
 
+function isTaskStarted(obj) {
+  return Boolean(
+    obj &&
+    obj.type === "event_msg" &&
+    obj.payload &&
+    obj.payload.type === "task_started"
+  );
+}
+
 function isTaskComplete(obj) {
   return Boolean(
     obj &&
@@ -20,5 +29,6 @@ function isTaskComplete(obj) {
 
 module.exports = {
   isVscodeSessionMeta,
+  isTaskStarted,
   isTaskComplete
 };

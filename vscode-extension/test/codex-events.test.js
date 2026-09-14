@@ -5,6 +5,7 @@ const assert = require("node:assert/strict");
 
 const {
   isVscodeSessionMeta,
+  isTaskStarted,
   isTaskComplete
 } = require("../src/codex-events");
 
@@ -43,6 +44,17 @@ test("detects task_complete", () => {
     isTaskComplete({
       type: "event_msg",
       payload: { type: "task_complete" }
+    }),
+    true
+  );
+});
+
+
+test("detects task_started", () => {
+  assert.equal(
+    isTaskStarted({
+      type: "event_msg",
+      payload: { type: "task_started", turn_id: "turn-1" }
     }),
     true
   );

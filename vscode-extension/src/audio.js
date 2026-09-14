@@ -6,7 +6,7 @@ const path = require("path");
 const { execFile } = require("child_process");
 const { scalePcm16Wav } = require("./wav");
 
-const VALID_SOUNDS = ["chime", "bell", "double", "soft"];
+const VALID_SOUNDS = ["chime", "bell", "double", "soft", "microwave", "handbell", "game"];
 
 function clampVolume(value) {
   const n = Number(value);
@@ -33,7 +33,7 @@ async function getScaledSoundPath(context, sound, volumePercent) {
 
   const target = path.join(
     cacheDir,
-    `${safeSound}-v1.2.0-${volume}.wav`
+    `${safeSound}-v1.2.2-${volume}.wav`
   );
 
   if (fs.existsSync(target)) return target;

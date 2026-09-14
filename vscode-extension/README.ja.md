@@ -7,7 +7,7 @@ VS Code内のCodexで開始したタスクが完了したときに、
 
 ## 機能
 
-- Chime / Bell / Double / Soft の4種類
+- Chime / Bell / Double / Soft / 電子レンジ風チン / ブライトベル / ゲームクリア風 の7種類
 - 0～100%、5%刻みの音量設定
 - テスト再生
 - ON/OFF
@@ -29,7 +29,9 @@ VS Code内のCodexで開始したタスクが完了したときに、
 ローカルのVS Code UI Extension Hostで動作し、
 `~/.codex/sessions` 配下のCodex JSONLセッションを読み取り専用で監視します。
 
-VS Code由来のセッションを識別し、ローカルの `task_complete` イベントを検出します。
+VS Code由来のセッションを識別し、Codexのローカルなタスク状態を監視します。
+`task_complete` では即座に鳴らさず通知待機に入り、直後に `task_started` が来た場合はキャンセルします。
+Codexが2秒間再開せず入力待ちになった場合だけ通知音を再生します。
 拡張起動時に既存ファイルの末尾を開始位置にするため、過去の完了イベントは再生しません。
 
 ## プライバシー
@@ -44,4 +46,4 @@ Codex内容を外部送信しません。詳細はリポジトリの `PRIVACY.ja
 
 OpenAI非公式であり、OpenAIによる承認・提携を意味しません。
 
-Version: 1.2.0
+Version: 1.2.2

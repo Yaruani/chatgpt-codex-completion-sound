@@ -15,21 +15,32 @@ const {
 
 const {
   isVscodeSessionMeta,
+  isTaskStarted,
   isTaskComplete
 } = require("./codex-events");
+
+const {
+  IdleCompletionGate
+} = require("./idle-gate");
 
 const SOUND_LABELS = {
   en: {
     chime: "Chime",
     bell: "Bell",
     double: "Double",
-    soft: "Soft"
+    soft: "Soft",
+    microwave: "Microwave Ding",
+    handbell: "Bright Bell",
+    game: "Game Clear"
   },
   ja: {
     chime: "チャイム",
     bell: "ベル",
     double: "ダブル",
-    soft: "ソフト"
+    soft: "ソフト",
+    microwave: "電子レンジ風チン",
+    handbell: "ブライトベル",
+    game: "ゲームクリア風"
   }
 };
 
@@ -69,6 +80,7 @@ let selectedSound = "bell";
 let volumePercent = 65;
 let debounceMs = 700;
 let lastNotifyAt = 0;
+let idleSettleMs = 2000;
 let sessionsRoot = null;
 
 function locale() {
@@ -106,6 +118,7 @@ function loadState(context) {
   );
 
   debounceMs = context.globalState.get("debounceMs", 700);
+  idleSettleMs = context.globalState.get("idleSettleMs", 2000);
 }
 
 async function playWithUi(context, reportResult) {
@@ -177,7 +190,8 @@ async function seedFile(filePath) {
     states.set(filePath, {
       offset: stat.size,
       buffer: "",
-      isVscode: detectVscodeSession(prefix)
+      isVscode: detectVscodeSession(prefix),
+      idleGate: null
     });
   } catch {}
 }
@@ -206,13 +220,37 @@ async function seedExistingFiles(dir) {
   }
 }
 
+function ensureIdleGate(context, state) {
+  if (state.idleGate) return state.idleGate;
+
+  state.idleGate = new IdleCompletionGate(
+    idleSettleMs,
+    () => maybeNotify(context, state)
+  );
+
+  return state.idleGate;
+}
+
 function processObject(context, state, obj) {
   if (isVscodeSessionMeta(obj)) {
     state.isVscode = true;
   }
 
+  if (isTaskStarted(obj)) {
+    ensureIdleGate(context, state).taskStarted();
+
+    const turnId = obj?.payload?.turn_id || "unknown";
+    log(`Codex task_started; pending completion notification cancelled; turn=${turnId}`);
+    return;
+  }
+
   if (isTaskComplete(obj)) {
-    maybeNotify(context, state);
+    ensureIdleGate(context, state).taskComplete();
+
+    const turnId = obj?.payload?.turn_id || "unknown";
+    log(
+      `Codex task_complete; waiting ${idleSettleMs}ms for true idle; turn=${turnId}`
+    );
   }
 }
 
@@ -238,7 +276,8 @@ function maybeNotify(context, state) {
   lastNotifyAt = now;
 
   log(
-    `Codex task_complete; sound=${selectedSound}; volume=${volumePercent}%`
+    `Codex true-idle detected; sound=${selectedSound}; ` +
+    `volume=${volumePercent}%`
   );
 
   void playWithUi(context, false);
@@ -260,15 +299,18 @@ async function processFile(context, filePath) {
     state = {
       offset: 0,
       buffer: "",
-      isVscode: false
+      isVscode: false,
+      idleGate: null
     };
     states.set(filePath, state);
   }
 
   if (stat.size < state.offset) {
+    if (state.idleGate) state.idleGate.dispose();
     state.offset = 0;
     state.buffer = "";
     state.isVscode = false;
+    state.idleGate = null;
   }
 
   if (stat.size === state.offset) {
@@ -371,7 +413,7 @@ async function activate(context) {
 
   loadState(context);
 
-  log("extension 1.2.0 activated");
+  log("extension 1.2.2 activated");
   log(
     `platform=${process.platform}; enabled=${enabled}; ` +
     `sound=${selectedSound}; volume=${volumePercent}%`
@@ -472,12 +514,13 @@ async function activate(context) {
       "codexCompletionSound.diagnostics",
       async () => {
         const info = [
-          "version=1.2.0",
+          "version=1.2.2",
           `platform=${process.platform}`,
           `arch=${process.arch}`,
           `enabled=${enabled}`,
           `sound=${selectedSound}`,
           `volumePercent=${volumePercent}`,
+          `idleSettleMs=${idleSettleMs}`,
           `sourceWav=${sourceSoundPath(context, selectedSound)}`,
           `sourceWavExists=${fs.existsSync(sourceSoundPath(context, selectedSound))}`,
           `globalStorage=${context.globalStorageUri.fsPath}`,
@@ -499,6 +542,10 @@ async function activate(context) {
 function deactivate() {
   if (watcher) watcher.close();
   watcher = null;
+
+  for (const state of states.values()) {
+    if (state.idleGate) state.idleGate.dispose();
+  }
 }
 
 module.exports = {
