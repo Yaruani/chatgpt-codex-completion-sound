@@ -102,14 +102,54 @@ function getLogsDbPath() {
   return path.join(getCodexHome(), "logs_2.sqlite");
 }
 
-function loadState(context) {
-  enabled = context.globalState.get("enabled", true);
+const CONFIG_SECTION = "codexCompletionSound";
 
-  const savedSound = context.globalState.get("sound", "bell");
+function config() {
+  return vscode.workspace.getConfiguration(CONFIG_SECTION);
+}
+
+function hasExplicitSetting(inspect) {
+  if (!inspect) return false;
+
+  return (
+    inspect.globalValue !== undefined ||
+    inspect.workspaceValue !== undefined ||
+    inspect.workspaceFolderValue !== undefined ||
+    inspect.globalLanguageValue !== undefined ||
+    inspect.workspaceLanguageValue !== undefined ||
+    inspect.workspaceFolderLanguageValue !== undefined
+  );
+}
+
+async function migrateLegacySettings(context) {
+  const cfg = config();
+
+  for (const key of ["enabled", "sound", "volumePercent"]) {
+    if (hasExplicitSetting(cfg.inspect(key))) continue;
+
+    const legacyValue = context.globalState.get(key);
+    if (legacyValue === undefined) continue;
+
+    await cfg.update(
+      key,
+      legacyValue,
+      vscode.ConfigurationTarget.Global
+    );
+
+    log(`migrated legacy setting ${key} -> ${CONFIG_SECTION}.${key}`);
+  }
+}
+
+function loadState() {
+  const cfg = config();
+
+  enabled = cfg.get("enabled", true);
+
+  const savedSound = cfg.get("sound", "bell");
   selectedSound = VALID_SOUNDS.includes(savedSound) ? savedSound : "bell";
 
   volumePercent = clampVolume(
-    context.globalState.get("volumePercent", 65)
+    cfg.get("volumePercent", 65)
   );
 }
 
@@ -175,12 +215,25 @@ async function activate(context) {
   output = vscode.window.createOutputChannel("Codex Completion Sound");
   context.subscriptions.push(output);
 
-  loadState(context);
+  await migrateLegacySettings(context);
+  loadState();
 
-  log("extension 1.2.4 activated");
+  log("extension 1.2.5 activated");
   log(
     `platform=${process.platform}; node=${process.versions.node}; ` +
     `enabled=${enabled}; sound=${selectedSound}; volume=${volumePercent}%`
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      "codexCompletionSound.openSettings",
+      async () => {
+        await vscode.commands.executeCommand(
+          "workbench.action.openSettings",
+          "@ext:yaruani.codex-done-sound"
+        );
+      }
+    )
   );
 
   context.subscriptions.push(
@@ -209,14 +262,15 @@ async function activate(context) {
 
         if (!picked) return;
 
-        selectedSound = picked.value;
-        await context.globalState.update("sound", selectedSound);
-
-        await playWithUi(context, false);
+        await config().update(
+          "sound",
+          picked.value,
+          vscode.ConfigurationTarget.Global
+        );
 
         vscode.window.showInformationMessage(
           msg().changedSound(
-            soundLabel(selectedSound),
+            soundLabel(picked.value),
             volumePercent
           )
         );
@@ -245,13 +299,14 @@ async function activate(context) {
 
         if (!picked) return;
 
-        volumePercent = picked.value;
-        await context.globalState.update("volumePercent", volumePercent);
-
-        await playWithUi(context, false);
+        await config().update(
+          "volumePercent",
+          picked.value,
+          vscode.ConfigurationTarget.Global
+        );
 
         vscode.window.showInformationMessage(
-          msg().changedVolume(volumePercent)
+          msg().changedVolume(picked.value)
         );
       }
     )
@@ -261,9 +316,15 @@ async function activate(context) {
     vscode.commands.registerCommand(
       "codexCompletionSound.toggle",
       async () => {
-        enabled = !enabled;
-        await context.globalState.update("enabled", enabled);
-        vscode.window.showInformationMessage(msg().enabled(enabled));
+        const nextEnabled = !enabled;
+
+        await config().update(
+          "enabled",
+          nextEnabled,
+          vscode.ConfigurationTarget.Global
+        );
+
+        vscode.window.showInformationMessage(msg().enabled(nextEnabled));
       }
     )
   );
@@ -275,7 +336,7 @@ async function activate(context) {
         const md = monitor ? monitor.diagnostics() : {};
 
         const info = [
-          "version=1.2.4",
+          "version=1.2.5",
           `platform=${process.platform}`,
           `arch=${process.arch}`,
           `node=${process.versions.node}`,
@@ -300,6 +361,37 @@ async function activate(context) {
         vscode.window.showInformationMessage(msg().diagnosticCopied);
       }
     )
+  );
+
+  context.subscriptions.push(
+    vscode.workspace.onDidChangeConfiguration(async (event) => {
+      if (!event.affectsConfiguration(CONFIG_SECTION)) return;
+
+      const previousSound = selectedSound;
+      const previousVolume = volumePercent;
+      const previousEnabled = enabled;
+
+      loadState();
+
+      log(
+        `settings changed; enabled=${enabled}; ` +
+        `sound=${selectedSound}; volume=${volumePercent}%`
+      );
+
+      if (
+        enabled &&
+        (
+          selectedSound !== previousSound ||
+          volumePercent !== previousVolume
+        )
+      ) {
+        await playWithUi(context, false);
+      }
+
+      if (enabled !== previousEnabled) {
+        log(`notification sound ${enabled ? "enabled" : "disabled"}`);
+      }
+    })
   );
 
   monitor = new CodexLogMonitor({

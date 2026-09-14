@@ -5,5 +5,17 @@
   "command.selectSound": "Codex Completion Sound: 通知音を選択",
   "command.setVolume": "Codex Completion Sound: 音量を設定",
   "command.toggle": "Codex Completion Sound: ON/OFF切替",
-  "command.diagnostics": "Codex Completion Sound: 診断情報"
+  "command.diagnostics": "Codex Completion Sound: 診断情報",
+  "command.openSettings": "Codex Completion Sound: 設定を開く",
+  "configuration.title": "Codex Completion Sound",
+  "configuration.enabled.description": "完了通知音のON/OFFを切り替えます。",
+  "configuration.sound.description": "通知音を選択します。変更すると選択した音をプレビュー再生します。",
+  "configuration.sound.chime": "チャイム",
+  "configuration.sound.bell": "ベル",
+  "configuration.sound.double": "ダブル",
+  "configuration.sound.soft": "ソフト",
+  "configuration.sound.microwave": "電子レンジ風チン",
+  "configuration.sound.handbell": "ブライトベル",
+  "configuration.sound.game": "ゲームクリア風",
+  "configuration.volume.description": "通知音量を0～100%、5%刻みで設定します。変更するとプレビュー再生します。"
 }

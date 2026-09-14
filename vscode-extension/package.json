@@ -2,7 +2,7 @@
   "name": "codex-done-sound",
   "displayName": "%displayName%",
   "description": "%description%",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "publisher": "yaruani",
   "license": "SEE LICENSE IN LICENSE",
   "icon": "images/icon.png",
@@ -51,6 +51,10 @@
   "contributes": {
     "commands": [
       {
+        "command": "codexCompletionSound.openSettings",
+        "title": "%command.openSettings%"
+      },
+      {
         "command": "codexCompletionSound.testSound",
         "title": "%command.testSound%"
       },
@@ -70,7 +74,54 @@
         "command": "codexCompletionSound.diagnostics",
         "title": "%command.diagnostics%"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "%configuration.title%",
+      "properties": {
+        "codexCompletionSound.enabled": {
+          "type": "boolean",
+          "default": true,
+          "scope": "window",
+          "order": 10,
+          "description": "%configuration.enabled.description%"
+        },
+        "codexCompletionSound.sound": {
+          "type": "string",
+          "default": "bell",
+          "scope": "window",
+          "order": 20,
+          "enum": [
+            "chime",
+            "bell",
+            "double",
+            "soft",
+            "microwave",
+            "handbell",
+            "game"
+          ],
+          "enumDescriptions": [
+            "%configuration.sound.chime%",
+            "%configuration.sound.bell%",
+            "%configuration.sound.double%",
+            "%configuration.sound.soft%",
+            "%configuration.sound.microwave%",
+            "%configuration.sound.handbell%",
+            "%configuration.sound.game%"
+          ],
+          "description": "%configuration.sound.description%"
+        },
+        "codexCompletionSound.volumePercent": {
+          "type": "integer",
+          "default": 65,
+          "minimum": 0,
+          "maximum": 100,
+          "multipleOf": 5,
+          "scope": "window",
+          "order": 30,
+          "description": "%configuration.volume.description%"
+        }
+      }
+    }
   },
   "scripts": {
     "test": "node --test test/*.test.js",

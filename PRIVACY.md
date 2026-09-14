@@ -33,7 +33,8 @@ The VS Code extension:
   App Server lifecycle records to detect `turn/started` and `turn/completed`.
 - Does not modify the Codex database.
 - Does not upload, transmit, or independently retain Codex log contents.
-- Stores only extension preferences in VS Code extension `globalState`.
+- Stores extension preferences (enabled state, sound, and volume) in the
+  user's normal VS Code settings.
 - Stores locally generated volume-scaled copies of bundled notification WAV
   files in the extension's VS Code global storage directory.
 - Uses a small local temporary lock file containing only process information
@@ -45,9 +46,9 @@ The VS Code extension:
 The project does not operate a server and therefore has no server-side data
 retention.
 
-Local extension settings and generated local audio-cache files remain on the
-user's device until removed by the browser/VS Code profile, extension cleanup,
-or normal temporary-file cleanup.
+Local VS Code/browser settings and generated local audio-cache files remain on
+the user's device until removed by the relevant profile/settings cleanup,
+extension cleanup, or normal temporary-file cleanup.
 
 ## Third parties
 

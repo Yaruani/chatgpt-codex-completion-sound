@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.2.5] - 2026-09-14
+
+### Added
+
+- Native VS Code Extension Settings UI for enable/disable, notification sound, and volume.
+- Automatic sound preview when the selected sound or volume changes.
+- `Codex Completion Sound: Open Settings` command.
+- Automatic migration of existing v1.2.4 `globalState` preferences to VS Code settings.
+
 ## [1.2.4] - 2026-09-14
 
 ### Fixed

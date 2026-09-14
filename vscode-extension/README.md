@@ -25,6 +25,18 @@ windows from playing the same completion sound.
 
 No Codex content is uploaded or retained by this extension.
 
+## Settings
+
+Open **Extensions → Codex Completion Sound → gear icon → Extension Settings**,
+or run `Codex Completion Sound: Open Settings`.
+
+The native VS Code settings page provides:
+
+- Enable/disable checkbox.
+- Sound selector.
+- Volume setting from 0–100%.
+- Automatic preview when the sound or volume changes.
+
 ## Commands
 
 Open the Command Palette (`Ctrl+Shift+P`) and use:
@@ -42,4 +54,4 @@ This build requires a VS Code extension-host Node runtime that provides
 
 Unofficial. Not affiliated with or endorsed by OpenAI.
 
-Version: 1.2.4
+Version: 1.2.5

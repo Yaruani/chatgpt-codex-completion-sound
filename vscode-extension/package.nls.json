@@ -5,5 +5,17 @@
   "command.selectSound": "Codex Completion Sound: Select Sound",
   "command.setVolume": "Codex Completion Sound: Set Volume",
   "command.toggle": "Codex Completion Sound: Toggle",
-  "command.diagnostics": "Codex Completion Sound: Diagnostics"
+  "command.diagnostics": "Codex Completion Sound: Diagnostics",
+  "command.openSettings": "Codex Completion Sound: Open Settings",
+  "configuration.title": "Codex Completion Sound",
+  "configuration.enabled.description": "Enable completion notification sounds.",
+  "configuration.sound.description": "Notification sound. Changing this setting plays a preview.",
+  "configuration.sound.chime": "Chime",
+  "configuration.sound.bell": "Bell",
+  "configuration.sound.double": "Double",
+  "configuration.sound.soft": "Soft",
+  "configuration.sound.microwave": "Microwave Ding",
+  "configuration.sound.handbell": "Bright Bell",
+  "configuration.sound.game": "Game Clear",
+  "configuration.volume.description": "Notification volume from 0 to 100 in 5% steps. Changing this setting plays a preview."
 }
