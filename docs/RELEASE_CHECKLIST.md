@@ -2,8 +2,8 @@
 
 ## Repository
 
-- [ ] Replace `YOUR_GITHUB_OWNER`.
-- [ ] Replace VS Code `your-publisher-id`.
+- [x] GitHub owner configured: `Yaruani`.
+- [x] VS Code Publisher ID configured: `yaruani`.
 - [ ] Confirm repository is public.
 - [ ] Enable private vulnerability reporting or another private security contact.
 - [ ] Review MIT copyright attribution.
@@ -45,3 +45,4 @@
 - [ ] Chrome screenshot uploaded.
 - [ ] Chrome small promo tile uploaded.
 - [ ] Privacy fields completed accurately.
+

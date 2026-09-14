@@ -1,0 +1,110 @@
+warning: in the working copy of 'docs/RELEASE_CHECKLIST.ja.md', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'docs/RELEASE_CHECKLIST.md', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'release-config.example.json', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'scripts/validate.ps1', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'vscode-extension/package.json', CRLF will be replaced by LF the next time Git touches it
+[1mdiff --git a/docs/RELEASE_CHECKLIST.ja.md b/docs/RELEASE_CHECKLIST.ja.md[m
+[1mindex ebd8bdb..70dd69d 100644[m
+[1m--- a/docs/RELEASE_CHECKLIST.ja.md[m
+[1m+++ b/docs/RELEASE_CHECKLIST.ja.md[m
+[36m@@ -2,8 +2,8 @@[m
+ [m
+ ## リポジトリ[m
+ [m
+[31m-- [ ] `YOUR_GITHUB_OWNER` を置換[m
+[31m-- [ ] VS Codeの `your-publisher-id` を置換[m
+[32m+[m[32m- [x] GitHub Ownerを `Yaruani` に設定済み[m
+[32m+[m[32m- [x] VS Code Publisher IDを `yaruani` に設定済み[m
+ - [ ] リポジトリをPublicに設定[m
+ - [ ] Private vulnerability reporting等の非公開セキュリティ報告経路を有効化[m
+ - [ ] MIT LicenseのCopyright表記を最終確認[m
+[36m@@ -45,3 +45,4 @@[m
+ - [ ] Chromeスクリーンショット登録[m
+ - [ ] Chrome small promo tile登録[m
+ - [ ] Privacy欄を実動作通りに入力[m
+[41m+[m
+[1mdiff --git a/docs/RELEASE_CHECKLIST.md b/docs/RELEASE_CHECKLIST.md[m
+[1mindex 4a4d183..3dbf1e1 100644[m
+[1m--- a/docs/RELEASE_CHECKLIST.md[m
+[1m+++ b/docs/RELEASE_CHECKLIST.md[m
+[36m@@ -2,8 +2,8 @@[m
+ [m
+ ## Repository[m
+ [m
+[31m-- [ ] Replace `YOUR_GITHUB_OWNER`.[m
+[31m-- [ ] Replace VS Code `your-publisher-id`.[m
+[32m+[m[32m- [x] GitHub owner configured: `Yaruani`.[m
+[32m+[m[32m- [x] VS Code Publisher ID configured: `yaruani`.[m
+ - [ ] Confirm repository is public.[m
+ - [ ] Enable private vulnerability reporting or another private security contact.[m
+ - [ ] Review MIT copyright attribution.[m
+[36m@@ -45,3 +45,4 @@[m
+ - [ ] Chrome screenshot uploaded.[m
+ - [ ] Chrome small promo tile uploaded.[m
+ - [ ] Privacy fields completed accurately.[m
+[41m+[m
+[1mdiff --git a/release-config.example.json b/release-config.example.json[m
+[1mindex 2dfaa4a..b774f5c 100644[m
+[1m--- a/release-config.example.json[m
+[1m+++ b/release-config.example.json[m
+[36m@@ -1,5 +1,6 @@[m
+ {[m
+[31m-  "publisherId": "your-publisher-id",[m
+[31m-  "githubOwner": "YOUR_GITHUB_OWNER",[m
+[32m+[m[32m  "publisherId": "yaruani",[m
+[32m+[m[32m  "githubOwner": "Yaruani",[m
+   "repositoryName": "chatgpt-codex-completion-sound"[m
+ }[m
+[41m+[m
+[1mdiff --git a/scripts/validate.ps1 b/scripts/validate.ps1[m
+[1mindex aa2c60d..30c54a9 100644[m
+[1m--- a/scripts/validate.ps1[m
+[1m+++ b/scripts/validate.ps1[m
+[36m@@ -18,10 +18,11 @@[m [mGet-Content -Raw -Encoding UTF8 $Manifest | ConvertFrom-Json | Out-Null[m
+ Write-Host "Checking placeholders..."[m
+ $Matches = Get-ChildItem $Root -Recurse -File |[m
+   Where-Object { $_.FullName -notmatch '\\.git\\' } |[m
+[31m-  Select-String -Pattern 'YOUR_GITHUB_OWNER|your-publisher-id' -SimpleMatch[m
+[32m+[m[32m  Select-String -Pattern @(('YOUR_' + 'GITHUB_OWNER'), ('your-' + 'publisher-id')) -SimpleMatch[m
+ [m
+ if ($Matches) {[m
+   Write-Warning "Release placeholders remain. This is expected until configure-release.ps1 is run."[m
+ }[m
+ [m
+ Write-Host "Validation complete."[m
+[41m+[m
+[1mdiff --git a/vscode-extension/package.json b/vscode-extension/package.json[m
+[1mindex 000d4d5..b5671ea 100644[m
+[1m--- a/vscode-extension/package.json[m
+[1m+++ b/vscode-extension/package.json[m
+[36m@@ -3,7 +3,7 @@[m
+   "displayName": "%displayName%",[m
+   "description": "%description%",[m
+   "version": "1.2.0",[m
+[31m-  "publisher": "your-publisher-id",[m
+[32m+[m[32m  "publisher": "yaruani",[m
+   "license": "SEE LICENSE IN LICENSE",[m
+   "icon": "images/icon.png",[m
+   "pricing": "Free",[m
+[36m@@ -30,11 +30,11 @@[m
+   "main": "./src/extension.js",[m
+   "repository": {[m
+     "type": "git",[m
+[31m-    "url": "https://github.com/YOUR_GITHUB_OWNER/chatgpt-codex-completion-sound.git"[m
+[32m+[m[32m    "url": "https://github.com/Yaruani/chatgpt-codex-completion-sound.git"[m
+   },[m
+[31m-  "homepage": "https://github.com/YOUR_GITHUB_OWNER/chatgpt-codex-completion-sound#readme",[m
+[32m+[m[32m  "homepage": "https://github.com/Yaruani/chatgpt-codex-completion-sound#readme",[m
+   "bugs": {[m
+[31m-    "url": "https://github.com/YOUR_GITHUB_OWNER/chatgpt-codex-completion-sound/issues"[m
+[32m+[m[32m    "url": "https://github.com/Yaruani/chatgpt-codex-completion-sound/issues"[m
+   },[m
+   "galleryBanner": {[m
+     "color": "#254C8E",[m
+[36m@@ -77,4 +77,4 @@[m
+     "check": "node --check src/extension.js && node --check src/audio.js && node --check src/codex-events.js && node --check src/wav.js",[m
+     "package": "npx --yes @vscode/vsce@latest package"[m
+   }[m
+[31m-}[m
+\ No newline at end of file[m
+[32m+[m[32m}[m

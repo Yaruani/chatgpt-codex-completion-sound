@@ -3,7 +3,7 @@
   "displayName": "%displayName%",
   "description": "%description%",
   "version": "1.2.0",
-  "publisher": "your-publisher-id",
+  "publisher": "yaruani",
   "license": "SEE LICENSE IN LICENSE",
   "icon": "images/icon.png",
   "pricing": "Free",
@@ -30,11 +30,11 @@
   "main": "./src/extension.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/YOUR_GITHUB_OWNER/chatgpt-codex-completion-sound.git"
+    "url": "https://github.com/Yaruani/chatgpt-codex-completion-sound.git"
   },
-  "homepage": "https://github.com/YOUR_GITHUB_OWNER/chatgpt-codex-completion-sound#readme",
+  "homepage": "https://github.com/Yaruani/chatgpt-codex-completion-sound#readme",
   "bugs": {
-    "url": "https://github.com/YOUR_GITHUB_OWNER/chatgpt-codex-completion-sound/issues"
+    "url": "https://github.com/Yaruani/chatgpt-codex-completion-sound/issues"
   },
   "galleryBanner": {
     "color": "#254C8E",

@@ -2,8 +2,8 @@
 
 ## リポジトリ
 
-- [ ] `YOUR_GITHUB_OWNER` を置換
-- [ ] VS Codeの `your-publisher-id` を置換
+- [x] GitHub Ownerを `Yaruani` に設定済み
+- [x] VS Code Publisher IDを `yaruani` に設定済み
 - [ ] リポジトリをPublicに設定
 - [ ] Private vulnerability reporting等の非公開セキュリティ報告経路を有効化
 - [ ] MIT LicenseのCopyright表記を最終確認
@@ -45,3 +45,4 @@
 - [ ] Chromeスクリーンショット登録
 - [ ] Chrome small promo tile登録
 - [ ] Privacy欄を実動作通りに入力
+
