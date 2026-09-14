@@ -1,6 +1,10 @@
 "use strict";
 
-const VALID_SOUNDS = new Set(["chime", "bell", "double", "soft"]);
+const VALID_SOUNDS = new Set([
+  "chime", "bell", "double", "soft",
+  "microwave", "handbell", "game"
+]);
+
 let creatingOffscreen = null;
 
 async function ensureOffscreenDocument() {
@@ -28,23 +32,25 @@ async function ensureOffscreenDocument() {
 
 async function playSound(sound, volume) {
   await ensureOffscreenDocument();
-  const safeSound = VALID_SOUNDS.has(sound) ? sound : "chime";
 
-  await chrome.runtime.sendMessage({
+  const safeSound = VALID_SOUNDS.has(sound) ? sound : "chime";
+  const result = await chrome.runtime.sendMessage({
     type: "PLAY_AUDIO",
     target: "offscreen",
     sound: safeSound,
     volume
   });
+
+  if (!result?.ok) {
+    throw new Error(result?.error || "Audio playback failed");
+  }
 }
 
 chrome.runtime.onInstalled.addListener(async () => {
   const defaults = {
     enabled: true,
     volume: 0.65,
-    sound: "chime",
-    settleMs: 900,
-    minBusyMs: 500
+    sound: "chime"
   };
 
   const current = await chrome.storage.local.get(Object.keys(defaults));

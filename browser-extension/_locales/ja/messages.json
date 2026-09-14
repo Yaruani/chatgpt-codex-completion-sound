@@ -44,6 +44,15 @@
   "soft": {
     "message": "ソフト"
   },
+  "microwave": {
+    "message": "電子レンジ風チン"
+  },
+  "handbell": {
+    "message": "ブライトベル"
+  },
+  "game": {
+    "message": "ゲームクリア風"
+  },
   "privacyNote": {
     "message": "chatgpt.com 上だけで動作します。設定はこの端末内に保存されます。"
   }

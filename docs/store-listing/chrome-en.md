@@ -13,15 +13,14 @@ Plays a local notification sound when ChatGPT finishes generating. No analytics 
 ChatGPT Completion Sound gives you an audible signal when ChatGPT finishes
 generating and returns to an input-ready state.
 
-It is designed for long-running prompts where you want to work in another tab
-or application instead of watching the ChatGPT window.
-
 Features:
 
-- Four bundled notification sounds: Chime, Bell, Double, and Soft.
+- Seven bundled notification sounds: Chime, Bell, Double, Soft, Microwave Ding,
+  Bright Bell, and Game Clear.
 - Independent volume control.
 - Enable/disable switch.
 - One-click test playback.
+- Automatic preview when the selected sound or volume changes.
 - English and Japanese UI.
 - Works with Chrome and Chromium-based browsers such as Brave.
 
@@ -35,16 +34,8 @@ Privacy:
 - No ChatGPT conversation content is transmitted by the extension.
 - Settings are stored locally on the device.
 
-The extension requests access only to `chatgpt.com` so it can locally observe
+The extension requests access only to `chatgpt.com` so it can locally detect
 the generating/idle UI state and play a bundled notification sound when the
 task finishes.
 
 Unofficial extension. Not affiliated with or endorsed by OpenAI.
-
-## Suggested category
-
-Tools / Productivity (select the closest current category offered by the dashboard)
-
-## Privacy policy
-
-Use the public URL for the repository's `PRIVACY.md`.

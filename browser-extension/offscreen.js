@@ -1,17 +1,8 @@
 "use strict";
 
-const cache = new Map();
+let currentAudio = null;
 
-function getAudio(sound) {
-  if (!cache.has(sound)) {
-    const audio = new Audio(chrome.runtime.getURL(`sounds/${sound}.wav`));
-    audio.preload = "auto";
-    cache.set(sound, audio);
-  }
-  return cache.get(sound);
-}
-
-chrome.runtime.onMessage.addListener((message) => {
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (
     !message ||
     message.target !== "offscreen" ||
@@ -20,15 +11,31 @@ chrome.runtime.onMessage.addListener((message) => {
     return;
   }
 
-  const audio = getAudio(message.sound || "chime");
-  audio.pause();
-  audio.currentTime = 0;
-  audio.volume =
-    typeof message.volume === "number"
-      ? Math.max(0, Math.min(1, message.volume))
-      : 0.65;
+  (async () => {
+    try {
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio = null;
+      }
 
-  audio.play().catch((error) => {
-    console.error("Completion sound playback failed:", error);
-  });
+      const audio = new Audio(
+        chrome.runtime.getURL(`sounds/${message.sound || "chime"}.wav`)
+      );
+      currentAudio = audio;
+
+      audio.preload = "auto";
+      audio.volume =
+        typeof message.volume === "number"
+          ? Math.max(0, Math.min(1, message.volume))
+          : 0.65;
+
+      await audio.play();
+      sendResponse({ ok: true });
+    } catch (error) {
+      console.error("Completion sound playback failed:", error);
+      sendResponse({ ok: false, error: String(error) });
+    }
+  })();
+
+  return true;
 });

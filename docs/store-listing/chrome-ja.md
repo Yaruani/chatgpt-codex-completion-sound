@@ -13,15 +13,14 @@ ChatGPTの生成終了時にローカル通知音を再生します。解析・�
 ChatGPT Completion Sound は、ChatGPTの生成が終了して入力可能な状態へ戻ったときに、
 音で知らせる拡張機能です。
 
-長い処理を依頼したあと、ChatGPT画面を見続けずに別タブや別アプリで作業する用途を
-想定しています。
-
 機能:
 
-- Chime / Bell / Double / Soft の4種類の通知音
+- Chime / Bell / Double / Soft / 電子レンジ風チン / ブライトベル /
+  ゲームクリア風 の7種類
 - 拡張専用の音量調整
 - ON/OFF
 - ワンクリックのテスト再生
+- 音の種類・音量変更時の自動プレビュー
 - 英語／日本語UI
 - ChromeおよびBrave等のChromium系ブラウザで利用可能
 
@@ -39,11 +38,3 @@ ChatGPT Completion Sound は、ChatGPTの生成が終了して入力可能な状
 完了時に同梱通知音を再生するためだけに使用します。
 
 OpenAI非公式の独立拡張であり、OpenAIによる承認・提携を意味しません。
-
-## 推奨カテゴリ
-
-Tools / Productivity（Dashboardで現在選択可能な最も近いカテゴリを選択）
-
-## プライバシーポリシー
-
-公開GitHubリポジトリの `PRIVACY.ja.md` または英語版 `PRIVACY.md` のURLを使用します。

@@ -44,6 +44,15 @@
   "soft": {
     "message": "Soft"
   },
+  "microwave": {
+    "message": "Microwave Ding"
+  },
+  "handbell": {
+    "message": "Bright Bell"
+  },
+  "game": {
+    "message": "Game Clear"
+  },
   "privacyNote": {
     "message": "Runs only on chatgpt.com. Settings stay on this device."
   }

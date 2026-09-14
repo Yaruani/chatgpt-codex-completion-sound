@@ -28,6 +28,16 @@ function showStatus(text) {
   }, 1600);
 }
 
+async function previewSelectedSound() {
+  const result = await chrome.runtime.sendMessage({
+    type: "TEST_SOUND",
+    sound: sound.value,
+    volume: Number(volume.value) / 100
+  });
+
+  showStatus(result?.ok ? t("played") : t("playFailed"));
+}
+
 async function load() {
   localize();
 
@@ -50,6 +60,7 @@ enabled.addEventListener("change", async () => {
 
 sound.addEventListener("change", async () => {
   await chrome.storage.local.set({ sound: sound.value });
+  await previewSelectedSound();
 });
 
 volume.addEventListener("input", () => {
@@ -60,16 +71,9 @@ volume.addEventListener("change", async () => {
   await chrome.storage.local.set({
     volume: Number(volume.value) / 100
   });
+  await previewSelectedSound();
 });
 
-test.addEventListener("click", async () => {
-  const result = await chrome.runtime.sendMessage({
-    type: "TEST_SOUND",
-    sound: sound.value,
-    volume: Number(volume.value) / 100
-  });
-
-  showStatus(result?.ok ? t("played") : t("playFailed"));
-});
+test.addEventListener("click", previewSelectedSound);
 
 load();
