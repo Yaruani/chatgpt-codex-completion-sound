@@ -1,0 +1,50 @@
+{
+  "extensionName": {
+    "message": "ChatGPT Completion Sound"
+  },
+  "shortName": {
+    "message": "Completion Sound"
+  },
+  "extensionDescription": {
+    "message": "Plays a local notification sound when ChatGPT finishes generating. No analytics or data transmission."
+  },
+  "notification": {
+    "message": "Notification sound"
+  },
+  "soundType": {
+    "message": "Sound"
+  },
+  "volume": {
+    "message": "Volume"
+  },
+  "test": {
+    "message": "Test selected sound"
+  },
+  "statusOn": {
+    "message": "Notification sound: ON"
+  },
+  "statusOff": {
+    "message": "Notification sound: OFF"
+  },
+  "played": {
+    "message": "Played"
+  },
+  "playFailed": {
+    "message": "Playback failed"
+  },
+  "chime": {
+    "message": "Chime"
+  },
+  "bell": {
+    "message": "Bell"
+  },
+  "double": {
+    "message": "Double"
+  },
+  "soft": {
+    "message": "Soft"
+  },
+  "privacyNote": {
+    "message": "Runs only on chatgpt.com. Settings stay on this device."
+  }
+}

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ChatGPT Completion Sound</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main>
+    <div class="title-row">
+      <img src="icons/icon32.png" width="32" height="32" alt="">
+      <div>
+        <h1>ChatGPT Completion Sound</h1>
+        <div class="version">v1.2.0</div>
+      </div>
+    </div>
+
+    <label class="switch-row">
+      <span data-i18n="notification">Notification sound</span>
+      <input id="enabled" type="checkbox">
+    </label>
+
+    <label class="block">
+      <span data-i18n="soundType">Sound</span>
+      <select id="sound">
+        <option value="chime" data-i18n="chime">Chime</option>
+        <option value="bell" data-i18n="bell">Bell</option>
+        <option value="double" data-i18n="double">Double</option>
+        <option value="soft" data-i18n="soft">Soft</option>
+      </select>
+    </label>
+
+    <label class="block">
+      <span class="volume-label">
+        <span data-i18n="volume">Volume</span>
+        <output id="volumeValue">65%</output>
+      </span>
+      <input id="volume" type="range" min="0" max="100" step="5">
+    </label>
+
+    <button id="test" type="button" data-i18n="test">Test selected sound</button>
+
+    <p class="privacy-note" data-i18n="privacyNote">
+      Runs only on chatgpt.com. Settings stay on this device.
+    </p>
+
+    <div id="status" role="status" aria-live="polite"></div>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>

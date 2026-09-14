@@ -1,0 +1,6 @@
+.github/**
+test/**
+*.vsix
+node_modules/**
+package-lock.json
+README.ja.md

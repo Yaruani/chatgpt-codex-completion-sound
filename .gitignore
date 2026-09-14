@@ -1,0 +1,7 @@
+dist/
+node_modules/
+*.vsix
+.DS_Store
+Thumbs.db
+.vscode-test/
+browser-extension-release.zip

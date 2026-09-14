@@ -1,0 +1,9 @@
+{
+  "displayName": "Codex Completion Sound",
+  "description": "VS Code内のCodexタスク完了時に選択可能なローカル通知音を再生します。非公式拡張です。",
+  "command.testSound": "Codex Completion Sound: テスト再生",
+  "command.selectSound": "Codex Completion Sound: 通知音を選択",
+  "command.setVolume": "Codex Completion Sound: 音量を設定",
+  "command.toggle": "Codex Completion Sound: ON/OFF切替",
+  "command.diagnostics": "Codex Completion Sound: 診断情報"
+}

@@ -1,0 +1,9 @@
+{
+  "displayName": "Codex Completion Sound",
+  "description": "Plays a selectable local notification sound when a VS Code Codex task completes. Unofficial.",
+  "command.testSound": "Codex Completion Sound: Test Sound",
+  "command.selectSound": "Codex Completion Sound: Select Sound",
+  "command.setVolume": "Codex Completion Sound: Set Volume",
+  "command.toggle": "Codex Completion Sound: Toggle",
+  "command.diagnostics": "Codex Completion Sound: Diagnostics"
+}

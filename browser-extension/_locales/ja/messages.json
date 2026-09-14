@@ -1,0 +1,50 @@
+{
+  "extensionName": {
+    "message": "ChatGPT Completion Sound"
+  },
+  "shortName": {
+    "message": "完了通知音"
+  },
+  "extensionDescription": {
+    "message": "ChatGPTの生成終了時にローカル通知音を再生します。解析・データ送信は行いません。"
+  },
+  "notification": {
+    "message": "通知音"
+  },
+  "soundType": {
+    "message": "音の種類"
+  },
+  "volume": {
+    "message": "音量"
+  },
+  "test": {
+    "message": "選択中の音をテスト"
+  },
+  "statusOn": {
+    "message": "通知音: ON"
+  },
+  "statusOff": {
+    "message": "通知音: OFF"
+  },
+  "played": {
+    "message": "再生しました"
+  },
+  "playFailed": {
+    "message": "再生に失敗しました"
+  },
+  "chime": {
+    "message": "チャイム"
+  },
+  "bell": {
+    "message": "ベル"
+  },
+  "double": {
+    "message": "ダブル"
+  },
+  "soft": {
+    "message": "ソフト"
+  },
+  "privacyNote": {
+    "message": "chatgpt.com 上だけで動作します。設定はこの端末内に保存されます。"
+  }
+}

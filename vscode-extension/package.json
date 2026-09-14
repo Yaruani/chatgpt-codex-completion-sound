@@ -1,0 +1,80 @@
+{
+  "name": "codex-done-sound",
+  "displayName": "%displayName%",
+  "description": "%description%",
+  "version": "1.2.0",
+  "publisher": "your-publisher-id",
+  "license": "SEE LICENSE IN LICENSE",
+  "icon": "images/icon.png",
+  "pricing": "Free",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "codex",
+    "notification",
+    "sound",
+    "completion",
+    "openai",
+    "productivity"
+  ],
+  "extensionKind": [
+    "ui"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./src/extension.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_GITHUB_OWNER/chatgpt-codex-completion-sound.git"
+  },
+  "homepage": "https://github.com/YOUR_GITHUB_OWNER/chatgpt-codex-completion-sound#readme",
+  "bugs": {
+    "url": "https://github.com/YOUR_GITHUB_OWNER/chatgpt-codex-completion-sound/issues"
+  },
+  "galleryBanner": {
+    "color": "#254C8E",
+    "theme": "dark"
+  },
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    },
+    "virtualWorkspaces": {
+      "supported": true
+    }
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "codexCompletionSound.testSound",
+        "title": "%command.testSound%"
+      },
+      {
+        "command": "codexCompletionSound.selectSound",
+        "title": "%command.selectSound%"
+      },
+      {
+        "command": "codexCompletionSound.setVolume",
+        "title": "%command.setVolume%"
+      },
+      {
+        "command": "codexCompletionSound.toggle",
+        "title": "%command.toggle%"
+      },
+      {
+        "command": "codexCompletionSound.diagnostics",
+        "title": "%command.diagnostics%"
+      }
+    ]
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "check": "node --check src/extension.js && node --check src/audio.js && node --check src/codex-events.js && node --check src/wav.js",
+    "package": "npx --yes @vscode/vsce@latest package"
+  }
+}
