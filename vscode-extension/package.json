@@ -2,7 +2,7 @@
   "name": "codex-done-sound",
   "displayName": "%displayName%",
   "description": "%description%",
-  "version": "1.2.2",
+  "version": "1.2.4",
   "publisher": "yaruani",
   "license": "SEE LICENSE IN LICENSE",
   "icon": "images/icon.png",
@@ -74,7 +74,7 @@
   },
   "scripts": {
     "test": "node --test test/*.test.js",
-    "check": "node --check src/extension.js && node --check src/audio.js && node --check src/codex-events.js && node --check src/idle-gate.js && node --check src/wav.js",
+    "check": "node --check src/extension.js && node --check src/audio.js && node --check src/codex-log-monitor.js && node --check src/wav.js",
     "package": "npx --yes @vscode/vsce@latest package"
   }
 }

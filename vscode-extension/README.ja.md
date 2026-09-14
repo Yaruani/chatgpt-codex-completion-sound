@@ -1,9 +1,6 @@
 # Codex Completion Sound
 
-[English](README.md)
-
-VS Code内のCodexで開始したタスクが完了したときに、
-ローカル通知音を鳴らすWindows向け非公式拡張です。
+VS Code内のCodexで、**UI上のターンが実際に完了したとき**にローカル通知音を再生します。
 
 ## 機能
 
@@ -11,39 +8,40 @@ VS Code内のCodexで開始したタスクが完了したときに、
 - 0～100%、5%刻みの音量設定
 - テスト再生
 - ON/OFF
-- 英語／日本語のコマンド・実行時メッセージ
-- 解析、テレメトリ、広告、アカウント、拡張自身のネットワーク通信なし
+- Windowsでのローカル再生
+
+## 完了判定
+
+v1.2.4では、rollout JSONLの `task_complete` をUI完了とはみなしません。
+
+代わりにCodexのローカルDB `~/.codex/logs_2.sqlite` を**読み取り専用**で監視し、
+App Serverの正式なライフサイクルイベント
+
+`app-server event: turn/completed`
+
+だけを完了通知として扱います。
+
+起動時点の最大ログIDを開始位置にするため、過去イベントは再生しません。
+また、ローカルの単一インスタンスロックにより、複数のVS Codeウィンドウから
+同じ完了音が重複再生されることを防止します。
+
+Codexの内容を外部送信・保存しません。
 
 ## コマンド
 
-`Ctrl+Shift+P` から以下を実行できます。
+コマンドパレット（`Ctrl+Shift+P`）から以下を利用できます。
 
-- `Codex Completion Sound: テスト再生`
-- `Codex Completion Sound: 通知音を選択`
-- `Codex Completion Sound: 音量を設定`
-- `Codex Completion Sound: ON/OFF切替`
-- `Codex Completion Sound: 診断情報`
+- `Codex Completion Sound: Test Sound`
+- `Codex Completion Sound: Select Sound`
+- `Codex Completion Sound: Set Volume`
+- `Codex Completion Sound: Toggle`
+- `Codex Completion Sound: Diagnostics`
 
-## 完了検出
+## 互換性
 
-ローカルのVS Code UI Extension Hostで動作し、
-`~/.codex/sessions` 配下のCodex JSONLセッションを読み取り専用で監視します。
-
-VS Code由来のセッションを識別し、Codexのローカルなタスク状態を監視します。
-`task_complete` では即座に鳴らさず通知待機に入り、直後に `task_started` が来た場合はキャンセルします。
-Codexが2秒間再開せず入力待ちになった場合だけ通知音を再生します。
-拡張起動時に既存ファイルの末尾を開始位置にするため、過去の完了イベントは再生しません。
-
-## プライバシー
-
-Codex内容を外部送信しません。詳細はリポジトリの `PRIVACY.ja.md` を参照してください。
-
-## 対応OS
-
-本リリースの通知音再生は **Windows** 対応です。
-
-## 免責
+この版はVS CodeのExtension Hostが `node:sqlite` を提供している必要があります
+（Node.js 22.5以降）。通知音再生は現在Windows対応です。
 
 OpenAI非公式であり、OpenAIによる承認・提携を意味しません。
 
-Version: 1.2.2
+Version: 1.2.4

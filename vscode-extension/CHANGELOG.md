@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.2.4] - 2026-09-14
+
+### Fixed
+
+- Replaced rollout JSONL `task_complete` detection with the Codex App Server `turn/completed` event from `~/.codex/logs_2.sqlite`.
+- Historical SQLite log rows are ignored by seeding at the current maximum log ID.
+- Added a local single-instance monitor lock to prevent duplicate sounds from multiple VS Code windows.
+- Removed the 2-second heuristic completion delay.
+
 ## [1.2.2] - 2026-09-14
 
 ### Added
