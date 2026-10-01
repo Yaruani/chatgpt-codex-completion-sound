@@ -25,6 +25,12 @@ This repository contains two independent extensions:
 
 ## Browser extension — recommended GitHub installation
 
+Download these two files from the
+[latest GitHub Release](https://github.com/Yaruani/chatgpt-codex-completion-sound/releases/latest):
+
+- `install-chatgpt-completion-sound.ps1`
+- `chatgpt-completion-sound-browser-*-unpacked.zip`
+
 For manual GitHub installs, keep the unpacked extension in this fixed folder:
 
 ```text
@@ -33,10 +39,7 @@ For manual GitHub installs, keep the unpacked extension in this fixed folder:
 
 This avoids losing browser-local settings on each manual update.
 
-1. Download `install-chatgpt-completion-sound.ps1` and the latest
-   `chatgpt-completion-sound-browser-*-unpacked.zip` to your Windows Downloads
-   folder.
-2. Run:
+Run:
 
 ```powershell
 $d=(New-Object -ComObject Shell.Application).NameSpace("shell:Downloads").Self.Path; $s=Join-Path $d "install-chatgpt-completion-sound.ps1"; Unblock-File $s; & $s
@@ -69,7 +72,8 @@ tracking to continue.
 ## Privacy model
 
 The browser extension observes ChatGPT UI state locally and stores only its
-settings in browser local extension storage.
+settings in browser local extension storage. Transient conversation paths and
+completion state used for tracking are kept only in extension memory.
 
 The VS Code extension opens `~/.codex/logs_2.sqlite` in read-only mode and
 watches local App Server lifecycle records needed to detect `turn/started` and
@@ -83,6 +87,12 @@ See [PRIVACY.md](PRIVACY.md) for the complete policy.
 
 ```powershell
 ./scripts/build-browser.ps1
+```
+
+The browser build is written as:
+
+```text
+dist/chatgpt-completion-sound-browser-<version>-unpacked.zip
 ```
 
 ### VS Code

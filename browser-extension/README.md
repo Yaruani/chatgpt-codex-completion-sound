@@ -14,7 +14,7 @@ notification sound when ChatGPT finishes generating.
 - Keeps tracking a generating conversation after you navigate to another
   ChatGPT conversation.
 - Can notify while the ChatGPT tab is in the background or the browser is
-  minimized, as long as the ChatGPT tab remains open and active in Chromium.
+  minimized, as long as the ChatGPT page remains open and is not discarded.
 - Queues notification sounds so near-simultaneous completions are all audible.
 - English and Japanese UI.
 - No analytics, telemetry, advertising, accounts, or remote code.
@@ -31,22 +31,26 @@ API, so a future ChatGPT UI change can require an extension update.
 
 ## Recommended GitHub installation
 
+Download these two files from the
+[latest GitHub Release](https://github.com/Yaruani/chatgpt-codex-completion-sound/releases/latest):
+
+- `install-chatgpt-completion-sound.ps1`
+- `chatgpt-completion-sound-browser-*-unpacked.zip`
+
 To keep settings across manual updates, use a fixed unpacked-extension folder:
 
 ```text
 %USERPROFILE%\Extensions\chatgpt-completion-sound
 ```
 
-Place `install-chatgpt-completion-sound.ps1` and the latest
-`chatgpt-completion-sound-browser-*-unpacked.zip` in your Windows Downloads
-folder. The installer resolves the real Windows Downloads known folder, so it
-also works when Downloads has been redirected to another drive.
-
 Run:
 
 ```powershell
 $d=(New-Object -ComObject Shell.Application).NameSpace("shell:Downloads").Self.Path; $s=Join-Path $d "install-chatgpt-completion-sound.ps1"; Unblock-File $s; & $s
 ```
+
+The installer resolves the real Windows Downloads known folder, so it also
+works when Downloads has been redirected to another drive.
 
 For the first installation, open `chrome://extensions/` or
 `brave://extensions/`, enable Developer mode, choose **Load unpacked**, and
@@ -71,14 +75,15 @@ Open the extension popup to enable/disable notifications, select one of the
 seven sounds, set volume, or test the selected sound. Send prompts normally.
 Each tracked conversation plays one notification when its response finishes.
 
-The page-side tracker requires the ChatGPT tab to remain open. Closing or
+The page-side tracker requires the ChatGPT page to remain open. Closing or
 browser-discarding the relevant ChatGPT page stops that page's tracking.
 
 ## Privacy
 
 The extension runs only on `chatgpt.com`. It observes UI state locally and
-stores settings in `chrome.storage.local`. Conversation content is not sent by
-the extension.
+stores only enabled state, selected sound, and volume in `chrome.storage.local`.
+Transient conversation paths and completion state are held only in extension
+memory. Conversation content is not sent by the extension.
 
 Unofficial. Not affiliated with or endorsed by OpenAI.
 

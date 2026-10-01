@@ -33,8 +33,26 @@ jobs:
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
         run: |
-          gh release create "${{ github.ref_name }}" `
-            --generate-notes `
-            vscode-extension/*.vsix `
-            dist/*.zip
+          $browserVersion = (Get-Content ./browser-extension/manifest.json -Raw | ConvertFrom-Json).version
+          $vscodeVersion = (Get-Content ./vscode-extension/package.json -Raw | ConvertFrom-Json).version
+          $title = "Browser v$browserVersion / VS Code v$vscodeVersion"
+
+          $assets = @()
+          $assets += Get-ChildItem ./vscode-extension -Filter *.vsix | ForEach-Object { $_.FullName }
+          $assets += Get-ChildItem ./dist -Filter "chatgpt-completion-sound-browser-*-unpacked.zip" | ForEach-Object { $_.FullName }
+          $assets += (Resolve-Path ./scripts/install-chatgpt-completion-sound.ps1).Path
+
+          if ($assets.Count -lt 3) {
+            throw "Expected VSIX, browser ZIP, and installer script release assets."
+          }
+
+          $args = @(
+            "release", "create", $env:RELEASE_TAG,
+            "--generate-notes",
+            "--title", $title
+          )
+          $args += $assets
+
+          & gh @args

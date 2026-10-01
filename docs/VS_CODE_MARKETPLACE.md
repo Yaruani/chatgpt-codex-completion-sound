@@ -3,24 +3,14 @@
 Official documentation:
 https://code.visualstudio.com/api/working-with-extensions/publishing-extension
 
-## One-time setup
+## Current identity
 
-1. Create a permanent Marketplace Publisher.
-2. Record its **Publisher ID**.
-3. Configure this repository:
+- Publisher ID: `yaruani`
+- Extension ID: `yaruani.codex-done-sound`
+- Repository: `Yaruani/chatgpt-codex-completion-sound`
 
-```powershell
-./scripts/configure-release.ps1 `
-  -PublisherId "your-real-publisher-id" `
-  -GitHubOwner "your-github-owner" `
-  -RepositoryName "chatgpt-codex-completion-sound"
-```
-
-4. Review `vscode-extension/package.json`.
-5. Ensure the public GitHub repository exists.
-
-The Publisher ID is part of the extension identity and should be treated as
-permanent.
+Treat the Publisher ID as permanent because it is part of the extension
+identity.
 
 ## Validate
 
@@ -31,15 +21,24 @@ npm run check
 npx --yes @vscode/vsce@latest package
 ```
 
+The extension package currently declares version `1.2.5`.
+
 VS Code Marketplace requires a PNG icon; SVG extension icons are not accepted.
 This repository includes `images/icon.png`.
 
-## Publish
+## Publish an update
+
+Before publishing:
+
+1. Update `vscode-extension/package.json` and `vscode-extension/CHANGELOG.md`.
+2. Run the validation/package commands above.
+3. Test the generated VSIX on a clean Windows VS Code profile.
+4. Confirm the native Extension Settings UI, all seven sounds, preview behavior,
+   and an actual Codex `turn/completed` notification.
+5. Review privacy/security documentation if behavior changed.
 
 Follow the current Microsoft authentication guidance in the official
-publishing documentation. Microsoft states that global Azure DevOps PATs are
-retired on December 1, 2026, so do not build a long-term release process around
-global PAT authentication.
+publishing documentation.
 
 Typical command after authentication:
 
@@ -47,10 +46,10 @@ Typical command after authentication:
 npx --yes @vscode/vsce@latest publish
 ```
 
-You can also package a VSIX and upload it manually through Marketplace
-publisher management.
+You can also upload the generated VSIX manually through Marketplace publisher
+management.
 
-## Marketplace fields already prepared
+## Marketplace metadata in this repository
 
 - Display name / description
 - Category and keywords
@@ -59,13 +58,5 @@ publisher management.
 - README
 - CHANGELOG
 - LICENSE
-- Repository / issues / homepage placeholders
-- English/Japanese command metadata
-
-## Before first publish
-
-- Replace all placeholders.
-- Confirm the Marketplace name is available.
-- Enable a private security reporting path on GitHub.
-- Review the privacy policy.
-- Test on a clean Windows VS Code profile.
+- Repository / issues / homepage
+- English/Japanese command and settings metadata

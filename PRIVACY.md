@@ -1,6 +1,6 @@
 # Privacy Policy
 
-Last updated: 2026-09-14
+Last updated: 2026-10-01
 
 ## Summary
 
@@ -18,8 +18,10 @@ The browser extension:
 - Runs only on `https://chatgpt.com/*`.
 - Observes page UI state locally to determine whether ChatGPT is generating.
 - Does not read or transmit conversation text for analytics or storage.
-- Stores only extension preferences such as enabled state, sound choice,
-  volume, and internal timing values in `chrome.storage.local`.
+- Stores only extension preferences such as enabled state, sound choice, and
+  volume in `chrome.storage.local`.
+- Holds transient conversation paths and completion-tracking state only in
+  extension memory while tracking active responses.
 - Uses the `offscreen` permission only to play bundled local WAV files.
 - Makes no network requests of its own.
 
@@ -48,7 +50,8 @@ retention.
 
 Local VS Code/browser settings and generated local audio-cache files remain on
 the user's device until removed by the relevant profile/settings cleanup,
-extension cleanup, or normal temporary-file cleanup.
+extension cleanup, or normal temporary-file cleanup. Browser conversation
+tracking state is transient and is not persisted by the extension.
 
 ## Third parties
 

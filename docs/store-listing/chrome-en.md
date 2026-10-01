@@ -11,7 +11,7 @@ Plays a local notification sound when ChatGPT finishes generating. No analytics 
 ## Detailed description
 
 ChatGPT Completion Sound gives you an audible signal when ChatGPT finishes
-generating and returns to an input-ready state.
+generating.
 
 Features:
 
@@ -21,6 +21,11 @@ Features:
 - Enable/disable switch.
 - One-click test playback.
 - Automatic preview when the selected sound or volume changes.
+- Tracks multiple generating ChatGPT conversations independently.
+- Keeps tracking a response after you navigate to another ChatGPT conversation.
+- Can notify from a background tab or minimized browser while the ChatGPT page
+  remains open and is not discarded.
+- Queues notification sounds so near-simultaneous completions remain audible.
 - English and Japanese UI.
 - Works with Chrome and Chromium-based browsers such as Brave.
 
@@ -33,9 +38,9 @@ Privacy:
 - No user data is sold or shared.
 - No ChatGPT conversation content is transmitted by the extension.
 - Settings are stored locally on the device.
+- Transient conversation paths and tracking state stay in extension memory.
 
-The extension requests access only to `chatgpt.com` so it can locally detect
-the generating/idle UI state and play a bundled notification sound when the
-task finishes.
+The extension requests access only to `chatgpt.com` so it can locally observe
+the generating/completed UI state and play a bundled notification sound.
 
 Unofficial extension. Not affiliated with or endorsed by OpenAI.

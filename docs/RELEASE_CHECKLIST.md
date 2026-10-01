@@ -4,45 +4,59 @@
 
 - [x] GitHub owner configured: `Yaruani`.
 - [x] VS Code Publisher ID configured: `yaruani`.
-- [ ] Confirm repository is public.
-- [ ] Enable private vulnerability reporting or another private security contact.
-- [ ] Review MIT copyright attribution.
+- [x] Repository is public.
+- [x] Private vulnerability reporting is enabled.
+- [x] MIT attribution reviewed.
 
-## Code
+## Versioning / code
 
-- [ ] Browser manifest version is `1.2.0`.
-- [ ] VS Code package version is `1.2.0`.
+- [ ] Browser manifest version matches the intended browser release.
+- [ ] VS Code package version matches the intended VS Code release.
 - [ ] `npm test` passes.
 - [ ] `npm run check` passes.
+- [ ] GitHub CI passes on the release commit.
 - [ ] Browser extension loads with no service-worker/content-script errors.
-- [ ] Browser completion sound fires exactly once.
+- [ ] Browser normal completion fires exactly once.
+- [ ] Browser multi-conversation / navigation / background test passes.
+- [ ] Browser update preserves enabled/sound/volume settings.
 - [ ] VS Code `Test Sound` works.
-- [ ] VS Code actual Codex completion fires exactly once.
-- [ ] All four sounds work.
+- [ ] VS Code actual Codex `turn/completed` fires exactly once.
+- [ ] All seven sounds work.
 - [ ] 0%, 5%, 65%, and 100% volume tested.
 
-## Privacy/security
+## Privacy / security
 
-- [ ] No network requests added.
+- [ ] No extension-originated network requests added.
 - [ ] No analytics/telemetry added.
-- [ ] No new browser permissions.
+- [ ] Browser permissions remain minimal.
+- [ ] Browser host permission remains limited to `https://chatgpt.com/*`.
 - [ ] `PRIVACY.md` matches actual behavior.
-- [ ] Permission justifications match the manifest.
+- [ ] Permission justifications match the manifest and implementation.
+- [ ] No debug diagnostics or debug version strings remain in production files.
+- [ ] No personal paths, credentials, tokens, private IP addresses, or accidental
+      terminal/diff output are committed.
 
 ## Documentation
 
-- [ ] English README reviewed.
-- [ ] Japanese README reviewed.
-- [ ] English/Japanese store listing reviewed.
-- [ ] CHANGELOG updated.
+- [ ] Root English/Japanese README reviewed.
+- [ ] Browser English/Japanese README reviewed.
+- [ ] Architecture and testing docs match current implementation.
+- [ ] English/Japanese store listings reviewed.
+- [ ] Component and root CHANGELOGs updated.
 
-## Store
+## GitHub release
 
-- [ ] VS Code Publisher ID confirmed.
-- [ ] VS Code Marketplace package created with latest `vsce`.
-- [ ] Chrome Web Store ZIP created.
-- [ ] Store icon uploaded.
-- [ ] Chrome screenshot uploaded.
-- [ ] Chrome small promo tile uploaded.
+- [ ] Browser release ZIP created as
+      `chatgpt-completion-sound-browser-<version>-unpacked.zip`.
+- [ ] `install-chatgpt-completion-sound.ps1` included as a release asset.
+- [ ] VSIX created with the intended VS Code version.
+- [ ] Exact browser release ZIP tested before tagging.
+- [ ] Release tag created and pushed only after the release commit is verified.
+- [ ] GitHub Release workflow completes successfully.
+
+## Stores
+
+- [ ] VS Code Marketplace listing matches the current extension.
+- [ ] Chrome Web Store listing matches the current browser extension.
+- [ ] Store screenshots match the final popup UI.
 - [ ] Privacy fields completed accurately.
-

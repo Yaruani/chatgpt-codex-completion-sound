@@ -6,6 +6,12 @@ Build the upload ZIP with:
 ./scripts/build-browser.ps1
 ```
 
+The build output is:
+
+```text
+dist/chatgpt-completion-sound-browser-<version>-unpacked.zip
+```
+
 Before submission, test the exact ZIP in Chrome/Brave and verify:
 
 - all seven sounds,
@@ -13,7 +19,12 @@ Before submission, test the exact ZIP in Chrome/Brave and verify:
 - volume and on/off,
 - test playback,
 - normal completion detection,
-- navigation away from and back to an existing conversation.
+- navigation to another ChatGPT conversation while the original response is
+  still generating,
+- two simultaneous conversations followed by navigation to a third conversation
+  and backgrounding the browser,
+- queued playback for near-simultaneous completions,
+- settings preservation when updating through the fixed-folder installer.
 
 After installing or updating the extension, reload any ChatGPT tab that was
 already open before testing completion detection.

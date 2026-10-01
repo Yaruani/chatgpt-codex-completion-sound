@@ -12,7 +12,7 @@ Chrome / Brave向け Manifest V3 拡張です。
 - テスト再生、音の種類・音量変更時の自動プレビュー
 - 複数の生成中チャットを会話ごとに独立して追跡
 - 回答生成中に別のChatGPT会話へ移動しても元の会話を追跡
-- ChatGPTタブを開いたままであれば、別ブラウザタブへ移動した場合や
+- ChatGPTページを開いたままであれば、別ブラウザタブへ移動した場合や
   ブラウザ最小化中も通知可能
 - 複数回答が近い時刻に完了した場合は通知音を順番に再生
 - 英語／日本語UI
@@ -30,23 +30,26 @@ ChatGPTのUI状態をローカルで監視します。現在表示している�
 
 ## GitHub版の推奨インストール方法
 
+[最新のGitHub Release](https://github.com/Yaruani/chatgpt-codex-completion-sound/releases/latest)
+から次の2ファイルをWindowsのDownloadsへ保存します。
+
+- `install-chatgpt-completion-sound.ps1`
+- `chatgpt-completion-sound-browser-*-unpacked.zip`
+
 手動更新時にも設定を維持するため、拡張本体は次の固定フォルダーを使います。
 
 ```text
 %USERPROFILE%\Extensions\chatgpt-completion-sound
 ```
 
-WindowsのDownloadsフォルダーに、
-`install-chatgpt-completion-sound.ps1` と最新版の
-`chatgpt-completion-sound-browser-*-unpacked.zip` を置きます。
-DownloadsをE:など別ドライブへ移動していても、スクリプトはWindowsの
-既知フォルダーから実際のDownloads場所を取得します。
-
 実行コマンド：
 
 ```powershell
 $d=(New-Object -ComObject Shell.Application).NameSpace("shell:Downloads").Self.Path; $s=Join-Path $d "install-chatgpt-completion-sound.ps1"; Unblock-File $s; & $s
 ```
+
+DownloadsをE:など別ドライブへ移動していても、スクリプトはWindowsの
+既知フォルダーから実際のDownloads場所を取得します。
 
 初回だけ、Chromeなら `chrome://extensions/`、Braveなら
 `brave://extensions/` を開き、デベロッパーモードをONにして
@@ -72,14 +75,15 @@ ON/OFF・通知音・音量設定を維持できます。すでに開いてい�
 テストボタンでも確認できます。通常どおりChatGPTへ送信すると、追跡中の
 各会話が完了した時点でそれぞれ1回通知音が鳴ります。
 
-ページ側の追跡にはChatGPTタブが開いている必要があります。該当ページを閉じる、
+ページ側の追跡にはChatGPTページが開いている必要があります。該当ページを閉じる、
 またはブラウザによってページが破棄された場合、そのページ側の追跡は継続しません。
 
 ## プライバシー
 
-`chatgpt.com` 上だけで動作し、UI状態をローカルで監視します。設定は
-`chrome.storage.local` に保存します。会話内容を拡張機能が外部送信することは
-ありません。
+`chatgpt.com` 上だけで動作し、UI状態をローカルで監視します。
+`chrome.storage.local` に保存するのはON/OFF・通知音・音量だけです。
+会話パスや完了判定状態は一時的に拡張機能のメモリ上だけに保持します。
+会話内容を拡張機能が外部送信することはありません。
 
 OpenAI非公式の独立拡張です。
 

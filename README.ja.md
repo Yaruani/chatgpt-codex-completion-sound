@@ -23,16 +23,19 @@ ChatGPT や Codex に長い処理を実行させている間に別作業を行�
 
 ## ブラウザ版 — GitHubからの推奨導入方法
 
+[最新のGitHub Release](https://github.com/Yaruani/chatgpt-codex-completion-sound/releases/latest)
+から次の2ファイルをWindowsのDownloadsへ保存します。
+
+- `install-chatgpt-completion-sound.ps1`
+- `chatgpt-completion-sound-browser-*-unpacked.zip`
+
 手動更新でも設定を維持するため、拡張本体は次の固定フォルダーに配置します。
 
 ```text
 %USERPROFILE%\Extensions\chatgpt-completion-sound
 ```
 
-1. `install-chatgpt-completion-sound.ps1` と最新版の
-   `chatgpt-completion-sound-browser-*-unpacked.zip` をWindowsのDownloadsへ
-   ダウンロードします。
-2. PowerShellで次を実行します。
+PowerShellで次を実行します。
 
 ```powershell
 $d=(New-Object -ComObject Shell.Application).NameSpace("shell:Downloads").Self.Path; $s=Join-Path $d "install-chatgpt-completion-sound.ps1"; Unblock-File $s; & $s
@@ -66,6 +69,7 @@ ChatGPTページを閉じる、またはブラウザにページを破棄され�
 ## プライバシー
 
 ブラウザ版はChatGPTのUI状態をローカルで監視し、設定だけをブラウザ内に保存します。
+追跡に使う会話パスや完了判定状態は一時的に拡張機能のメモリ上だけに保持します。
 
 VS Code版はローカルのCodex DB `~/.codex/logs_2.sqlite` を読み取り専用で開き、
 `turn/started` / `turn/completed` の判定に必要なApp Serverの
@@ -79,6 +83,12 @@ VS Code版はローカルのCodex DB `~/.codex/logs_2.sqlite` を読み取り専
 
 ```powershell
 ./scripts/build-browser.ps1
+```
+
+出力ファイル名：
+
+```text
+dist/chatgpt-completion-sound-browser-<version>-unpacked.zip
 ```
 
 ### VS Code版

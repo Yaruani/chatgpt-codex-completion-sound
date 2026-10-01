@@ -1,26 +1,52 @@
 # Changelog
 
-All notable changes to this project are documented here.
+All notable project-level changes are summarized here.
 
-## [1.2.0] - 2026-09-14
+For detailed component history, see:
+
+- [Browser extension changelog](browser-extension/CHANGELOG.md)
+- [VS Code extension changelog](vscode-extension/CHANGELOG.md)
+
+## Browser extension 1.3.2 - 2026-10-01
 
 ### Added
 
-- Public-release repository structure for browser and VS Code extensions.
-- English and Japanese localization and documentation.
-- Four selectable bundled notification sounds.
-- Browser volume control and sound selector.
-- VS Code volume control from 0–100% in 5% steps.
-- Privacy, security, support, contributing, publishing, and store-listing docs.
-- GitHub Actions build validation.
-- Chrome Web Store graphic assets.
-- Marketplace icon and package metadata.
-- Automated release-configuration helper.
+- Independent tracking for multiple simultaneously generating ChatGPT
+  conversations.
+- Continued tracking after navigating to another ChatGPT conversation.
+- Background-tab/minimized-browser completion notification while the ChatGPT
+  page remains open and active.
+- Queued notification playback for near-simultaneous completions.
+- Fixed-folder GitHub installer workflow that preserves browser-local settings
+  across manual updates.
+
+### Changed
+
+- Completion detection now combines the current conversation's generation stop
+  control with ChatGPT sidebar processing state for conversations that are no
+  longer displayed.
+- GitHub installation and privacy documentation updated for the current
+  browser implementation.
 
 ### Security / privacy
 
-- No analytics or telemetry.
-- No remote code.
-- No network transmission of ChatGPT or Codex content.
-- Browser host access restricted to `https://chatgpt.com/*`.
-- VS Code Codex session files are read-only.
+- No new browser permissions.
+- Host access remains restricted to `https://chatgpt.com/*`.
+- No analytics, telemetry, remote code, or extension-originated network
+  requests.
+
+## VS Code extension 1.2.5 - 2026-09-14
+
+### Added
+
+- Native VS Code Extension Settings UI for enable/disable, notification sound,
+  and volume.
+- Seven bundled sounds and automatic preview when sound or volume changes.
+- `Codex Completion Sound: Open Settings` command.
+
+### Detection
+
+- Completion detection uses the local read-only Codex database
+  `~/.codex/logs_2.sqlite`.
+- Only Codex App Server lifecycle events `turn/started` and `turn/completed`
+  are used for UI-turn completion tracking.

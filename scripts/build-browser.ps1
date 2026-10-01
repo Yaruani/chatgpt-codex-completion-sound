@@ -1,4 +1,4 @@
-$ErrorActionPreference = "Stop"
+﻿$ErrorActionPreference = "Stop"
 
 $Root = Split-Path -Parent $PSScriptRoot
 $Source = Join-Path $Root "browser-extension"
@@ -12,7 +12,7 @@ if ([string]::IsNullOrWhiteSpace($Version)) {
     throw "Version not found in browser-extension\manifest.json"
 }
 
-$Out = Join-Path $Dist "chatgpt-completion-sound-$Version.zip"
+$Out = Join-Path $Dist "chatgpt-completion-sound-browser-$Version-unpacked.zip"
 
 New-Item -ItemType Directory -Force -Path $Dist | Out-Null
 

@@ -3,23 +3,13 @@
 公式ドキュメント:
 https://code.visualstudio.com/api/working-with-extensions/publishing-extension
 
-## 初回設定
+## 現在の識別情報
 
-1. MarketplaceのPublisherを作成
-2. **Publisher ID** を確定
-3. リポジトリに設定
+- Publisher ID: `yaruani`
+- Extension ID: `yaruani.codex-done-sound`
+- Repository: `Yaruani/chatgpt-codex-completion-sound`
 
-```powershell
-./scripts/configure-release.ps1 `
-  -PublisherId "your-real-publisher-id" `
-  -GitHubOwner "your-github-owner" `
-  -RepositoryName "chatgpt-codex-completion-sound"
-```
-
-4. `vscode-extension/package.json` を確認
-5. 公開GitHubリポジトリを作成
-
-Publisher IDは拡張の識別子に含まれるため、永続的なIDとして扱ってください。
+Publisher IDは拡張の識別子に含まれるため、永続的なIDとして扱います。
 
 ## 検証
 
@@ -30,14 +20,23 @@ npm run check
 npx --yes @vscode/vsce@latest package
 ```
 
+現在の `vscode-extension/package.json` のversionは `1.2.5` です。
+
 VS Code Marketplaceの拡張アイコンはPNGが必要です。
 このリポジトリには `images/icon.png` を収録しています。
 
-## 公開
+## アップデート公開
+
+公開前に以下を確認します。
+
+1. `vscode-extension/package.json` と `vscode-extension/CHANGELOG.md` を更新
+2. 上記の検証／packageコマンドを実行
+3. 生成したVSIXを新規Windows VS Codeプロファイルでテスト
+4. VS Code標準の拡張機能設定画面、7種類の音、自動プレビュー、
+   実際のCodex `turn/completed` 通知を確認
+5. 動作変更があればPrivacy／Security文書を確認
 
 認証方式はMicrosoftの最新公式手順に従ってください。
-MicrosoftはAzure DevOpsのglobal PATを2026年12月1日に廃止すると案内しているため、
-長期運用をglobal PAT前提で設計しないでください。
 
 認証後の代表的なコマンド:
 
@@ -45,9 +44,9 @@ MicrosoftはAzure DevOpsのglobal PATを2026年12月1日に廃止すると案内
 npx --yes @vscode/vsce@latest publish
 ```
 
-VSIXを作成してMarketplace管理画面から手動アップロードする方法もあります。
+生成したVSIXをMarketplace管理画面から手動アップロードする方法も利用できます。
 
-## 準備済み項目
+## リポジトリ内のMarketplace用情報
 
 - 表示名／説明
 - カテゴリ／キーワード
@@ -56,13 +55,5 @@ VSIXを作成してMarketplace管理画面から手動アップロードする�
 - README
 - CHANGELOG
 - LICENSE
-- Repository / Issues / Homepageのプレースホルダー
-- 英語／日本語のコマンド表示
-
-## 初回公開前
-
-- プレースホルダーをすべて置換
-- Marketplace上で名称が使用可能か確認
-- GitHubの非公開セキュリティ報告経路を有効化
-- Privacy Policyを最終確認
-- 新規Windows VS Codeプロファイルで動作確認
+- Repository / Issues / Homepage
+- 英語／日本語のコマンド・設定メタデータ

@@ -9,7 +9,9 @@ Stores only local extension preferences:
 - enabled/disabled
 - selected sound
 - volume
-- internal completion-detection timing values
+
+Transient conversation paths and completion-tracking state are kept in memory
+and are not persisted to extension storage.
 
 No synchronized cloud storage is used.
 
@@ -31,5 +33,6 @@ all websites.
 VS Code extensions do not use a browser-style permission prompt. The extension
 runs with the local VS Code process permissions.
 
-Its file access is limited by implementation to the local Codex session
-directory and its own extension storage/audio assets.
+Its Codex data access is limited by implementation to the local read-only
+database `~/.codex/logs_2.sqlite` (or the corresponding `CODEX_HOME` path), plus
+the extension's own storage and bundled audio assets.
