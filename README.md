@@ -14,45 +14,57 @@ This repository contains two independent extensions:
 
 - Seven bundled sounds: Chime, Bell, Double, Soft, Microwave Ding, Bright Bell,
   and Game Clear.
-- Browser extension: popup settings, volume, on/off, test playback, and
-  automatic preview.
+- Browser extension: popup settings, volume, on/off, test playback, automatic
+  preview, multi-conversation tracking, cross-conversation tracking, and
+  background-tab notification.
 - VS Code extension: native Extension Settings UI, volume, sound selector,
   on/off, test command, and automatic preview.
 - English and Japanese UI/documentation.
 - No analytics, telemetry, ads, accounts, or remote code.
 - No user data is transmitted by either extension.
 
-## Browser extension — install from GitHub
+## Browser extension — recommended GitHub installation
 
-The browser extension can be installed directly from this repository without
-using the Chrome Web Store.
+For manual GitHub installs, keep the unpacked extension in this fixed folder:
 
-1. On GitHub, choose **Code > Download ZIP**, or clone the repository with Git.
-2. Extract the ZIP if you downloaded it.
-3. Open `chrome://extensions/` in Chrome or `brave://extensions/` in Brave.
-4. Enable **Developer mode**.
-5. Choose **Load unpacked**.
-6. Select the repository's `browser-extension` folder.
-7. If ChatGPT was already open, reload the ChatGPT tab once.
+```text
+%USERPROFILE%\Extensions\chatgpt-completion-sound
+```
 
-Manual GitHub installations do **not** update automatically. To update, download
-or pull the latest repository version, click **Reload** for the extension on the
-browser's extensions page, then reload any already-open ChatGPT tabs.
+This avoids losing browser-local settings on each manual update.
+
+1. Download `install-chatgpt-completion-sound.ps1` and the latest
+   `chatgpt-completion-sound-browser-*-unpacked.zip` to your Windows Downloads
+   folder.
+2. Run:
+
+```powershell
+$d=(New-Object -ComObject Shell.Application).NameSpace("shell:Downloads").Self.Path; $s=Join-Path $d "install-chatgpt-completion-sound.ps1"; Unblock-File $s; & $s
+```
+
+The script follows the real Windows Downloads known folder even if Downloads
+has been redirected to another drive, and installs/updates the extension under
+`%USERPROFILE%\Extensions\chatgpt-completion-sound`.
+
+On first install only, open `chrome://extensions/` or `brave://extensions/`,
+enable Developer mode, choose **Load unpacked**, and select that fixed folder.
+For later updates, do **not** remove the extension: run the installer again,
+click **Reload** on the existing extension, and reload already-open ChatGPT tabs.
+The extension's on/off, sound, and volume settings remain associated with the
+same unpacked extension.
 
 ## Browser extension — usage
 
-1. Open `https://chatgpt.com/` and use ChatGPT normally.
-2. Click the extension icon to open its settings.
-3. Enable or disable completion sounds.
-4. Select one of the seven bundled sounds.
-5. Adjust the volume. Changing the sound or volume automatically previews it.
-6. Use **Test** to play the currently selected sound at any time.
-7. Send a prompt. When that response finishes generating, the selected sound is
-   played.
+Open `https://chatgpt.com/`, configure the popup, and send prompts normally.
+The browser extension can independently track multiple generating conversations.
+You may navigate to another ChatGPT conversation while earlier responses are
+still generating; the extension keeps tracking them through the sidebar. If
+several responses finish close together, their sounds are queued rather than
+cutting each other off.
 
-If you navigate to another existing ChatGPT conversation while a response is
-still generating, tracking for that response is cancelled. This prevents stale
-state from causing a notification in the wrong conversation.
+It can also notify while the ChatGPT tab is in the background or the browser is
+minimized. The ChatGPT page must remain open and not be discarded for page-side
+tracking to continue.
 
 ## Privacy model
 
@@ -60,9 +72,8 @@ The browser extension observes ChatGPT UI state locally and stores only its
 settings in browser local extension storage.
 
 The VS Code extension opens `~/.codex/logs_2.sqlite` in read-only mode and
-watches local App Server lifecycle records needed to detect
-`turn/started` and `turn/completed`. It does not upload, retain, or transmit
-Codex log contents.
+watches local App Server lifecycle records needed to detect `turn/started` and
+`turn/completed`. It does not upload, retain, or transmit Codex log contents.
 
 See [PRIVACY.md](PRIVACY.md) for the complete policy.
 
@@ -91,4 +102,3 @@ MIT. See [LICENSE](LICENSE).
 
 This project is unofficial and is not affiliated with or endorsed by OpenAI.
 See [NOTICE.md](NOTICE.md).
-

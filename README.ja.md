@@ -13,42 +13,55 @@ ChatGPT や Codex に長い処理を実行させている間に別作業を行�
 ## 機能
 
 - 7種類の通知音
-- ブラウザ版：ポップアップ設定、音量、ON/OFF、テスト再生、自動プレビュー
+- ブラウザ版：ポップアップ設定、音量、ON/OFF、テスト再生、自動プレビュー、
+  複数チャット同時追跡、別チャット移動後の追跡、バックグラウンドタブ通知
 - VS Code版：標準の拡張機能設定画面、音量、音選択、ON/OFF、テスト再生、
   自動プレビュー
 - 英語／日本語UI
 - 解析、テレメトリ、広告、アカウント、外部コード読み込みなし
 - ユーザーデータを外部送信しない
 
-## ブラウザ版 — GitHubからの導入方法
+## ブラウザ版 — GitHubからの推奨導入方法
 
-Chrome Web Storeを使わず、このGitHubリポジトリから直接導入できます。
+手動更新でも設定を維持するため、拡張本体は次の固定フォルダーに配置します。
 
-1. GitHubの **Code > Download ZIP** からリポジトリをダウンロードします。
-   Gitを使う場合はcloneでも構いません。
-2. ZIPをダウンロードした場合は展開します。
-3. Chromeなら `chrome://extensions/`、Braveなら `brave://extensions/` を開きます。
-4. **デベロッパーモード** をONにします。
-5. **パッケージ化されていない拡張機能を読み込む** を選びます。
-6. リポジトリ内の `browser-extension` フォルダーを指定します。
-7. すでにChatGPTを開いていた場合は、そのChatGPTタブを一度再読み込みします。
+```text
+%USERPROFILE%\Extensions\chatgpt-completion-sound
+```
 
-GitHubから手動導入した場合は**自動更新されません**。更新時は最新版を
-再ダウンロード、または `git pull` したうえで、ブラウザの拡張機能ページから
-この拡張を **再読み込み** し、すでに開いているChatGPTタブも一度再読み込みしてください。
+1. `install-chatgpt-completion-sound.ps1` と最新版の
+   `chatgpt-completion-sound-browser-*-unpacked.zip` をWindowsのDownloadsへ
+   ダウンロードします。
+2. PowerShellで次を実行します。
+
+```powershell
+$d=(New-Object -ComObject Shell.Application).NameSpace("shell:Downloads").Self.Path; $s=Join-Path $d "install-chatgpt-completion-sound.ps1"; Unblock-File $s; & $s
+```
+
+DownloadsをE:など別ドライブへ移動していても、Windowsの既知フォルダーから
+実際の場所を取得して追従します。拡張は
+`%USERPROFILE%\Extensions\chatgpt-completion-sound` に配置・更新されます。
+
+初回だけ、Chromeなら `chrome://extensions/`、Braveなら
+`brave://extensions/` を開き、デベロッパーモードをONにして
+**パッケージ化されていない拡張機能を読み込む** から上記固定フォルダーを
+指定します。
+
+以後の更新では**拡張を削除しません**。配置スクリプトを再実行してから、
+拡張機能ページで既存拡張の **再読み込み** を押し、すでに開いている
+ChatGPTタブも一度再読み込みします。同じ固定フォルダーを使い続けることで、
+ON/OFF・通知音・音量のブラウザローカル設定を維持できます。
 
 ## ブラウザ版 — 使い方
 
-1. `https://chatgpt.com/` を通常どおり開きます。
-2. ブラウザの拡張機能アイコンから **ChatGPT Completion Sound** を開きます。
-3. 通知音のON/OFFを設定します。
-4. 7種類から通知音を選びます。
-5. 音量を調整します。通知音または音量を変更すると自動でプレビュー再生されます。
-6. **テスト** ボタンで現在の設定音をいつでも確認できます。
-7. ChatGPTへプロンプトを送信します。回答生成が終了すると選択した音が鳴ります。
+`https://chatgpt.com/` を通常どおり利用します。ブラウザ版は複数の生成中会話を
+会話ごとに独立して追跡できます。回答生成中に別のChatGPT会話へ移動しても、
+元の会話をサイドバーから追跡します。複数回答が近い時刻に完了した場合も、
+通知音を順番に再生するため前の音を途中で切りません。
 
-回答生成中に別の既存ChatGPT会話へ移動した場合、その回答の追跡は解除されます。
-これは別会話への移動後に誤通知が発生するのを防ぐための仕様です。
+別のブラウザタブへ移動した場合やブラウザ最小化中も通知できます。
+ChatGPTページを閉じる、またはブラウザにページを破棄されると、そのページ側の
+追跡は継続しません。
 
 ## プライバシー
 
@@ -84,4 +97,3 @@ MIT Licenseです。[LICENSE](LICENSE) を参照してください。
 ## 免責
 
 OpenAI非公式の独立プロジェクトです。[NOTICE.ja.md](NOTICE.ja.md) を参照してください。
-

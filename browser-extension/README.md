@@ -1,7 +1,5 @@
 # ChatGPT Completion Sound
 
-[日本語](README.ja.md)
-
 A lightweight Manifest V3 extension for Chrome and Brave that plays a local
 notification sound when ChatGPT finishes generating.
 
@@ -11,52 +9,77 @@ notification sound when ChatGPT finishes generating.
   and Game Clear.
 - Independent volume control.
 - Enable/disable switch.
-- Test playback.
-- Automatic preview when sound or volume changes.
+- Test playback and automatic preview when sound or volume changes.
+- Tracks multiple generating ChatGPT conversations independently.
+- Keeps tracking a generating conversation after you navigate to another
+  ChatGPT conversation.
+- Can notify while the ChatGPT tab is in the background or the browser is
+  minimized, as long as the ChatGPT tab remains open and active in Chromium.
+- Queues notification sounds so near-simultaneous completions are all audible.
 - English and Japanese UI.
 - No analytics, telemetry, advertising, accounts, or remote code.
 
-## Install from GitHub
+## Completion detection
 
-1. On the repository page, choose **Code > Download ZIP**, or clone the
-   repository with Git.
-2. Extract the ZIP if needed.
-3. Open `chrome://extensions/` in Chrome or `brave://extensions/` in Brave.
-4. Enable **Developer mode**.
-5. Choose **Load unpacked**.
-6. Select the `browser-extension` folder.
-7. Reload any ChatGPT tab that was already open.
+The extension observes ChatGPT UI state locally. On the currently displayed
+conversation it uses ChatGPT's visible generation stop control. For generating
+conversations that are no longer displayed, it tracks the corresponding
+sidebar processing state. Each conversation path has an independent tracker.
 
-Manual GitHub installations do not update automatically. To update, replace or
-pull the repository files, click **Reload** for this extension on the browser's
-extensions page, then reload any already-open ChatGPT tabs.
+These are observed ChatGPT UI signals rather than a public ChatGPT extension
+API, so a future ChatGPT UI change can require an extension update.
+
+## Recommended GitHub installation
+
+To keep settings across manual updates, use a fixed unpacked-extension folder:
+
+```text
+%USERPROFILE%\Extensions\chatgpt-completion-sound
+```
+
+Place `install-chatgpt-completion-sound.ps1` and the latest
+`chatgpt-completion-sound-browser-*-unpacked.zip` in your Windows Downloads
+folder. The installer resolves the real Windows Downloads known folder, so it
+also works when Downloads has been redirected to another drive.
+
+Run:
+
+```powershell
+$d=(New-Object -ComObject Shell.Application).NameSpace("shell:Downloads").Self.Path; $s=Join-Path $d "install-chatgpt-completion-sound.ps1"; Unblock-File $s; & $s
+```
+
+For the first installation, open `chrome://extensions/` or
+`brave://extensions/`, enable Developer mode, choose **Load unpacked**, and
+select:
+
+```text
+%USERPROFILE%\Extensions\chatgpt-completion-sound
+```
+
+For later updates, do **not** remove the extension. Run the installer again,
+then click **Reload** on the existing extension. Keeping the same fixed folder
+keeps the unpacked extension identity and its `chrome.storage.local` settings.
+Finally, reload any ChatGPT tabs that were already open.
+
+If you were previously loading the extension from a different folder, switching
+to the fixed folder is a one-time reinstall and may reset settings once. After
+that, normal updates preserve them.
 
 ## Usage
 
-1. Open `https://chatgpt.com/`.
-2. Click the extension icon to open the settings popup.
-3. Enable or disable the notification.
-4. Select one of the seven bundled sounds.
-5. Adjust the volume. Sound and volume changes are previewed automatically.
-6. Use **Test** to play the currently selected sound.
-7. Send a prompt normally. The selected sound plays when that response finishes
-   generating.
+Open the extension popup to enable/disable notifications, select one of the
+seven sounds, set volume, or test the selected sound. Send prompts normally.
+Each tracked conversation plays one notification when its response finishes.
 
-## Completion detection
-
-The extension arms only after a user submit action, then tracks ChatGPT's
-canonical `[data-testid="stop-button"]` generation control. A notification is
-sent only after that control appears and then disappears.
-
-Navigating to another existing ChatGPT conversation while a response is still
-generating cancels tracking for that response.
+The page-side tracker requires the ChatGPT tab to remain open. Closing or
+browser-discarding the relevant ChatGPT page stops that page's tracking.
 
 ## Privacy
 
-The extension runs only on `chatgpt.com`. Settings are stored locally in
-`chrome.storage.local`. No conversation content is transmitted by the extension.
+The extension runs only on `chatgpt.com`. It observes UI state locally and
+stores settings in `chrome.storage.local`. Conversation content is not sent by
+the extension.
 
 Unofficial. Not affiliated with or endorsed by OpenAI.
 
-Version: 1.2.7
-
+Version: 1.3.2
