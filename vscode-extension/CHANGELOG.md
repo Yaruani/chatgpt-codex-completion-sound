@@ -1,5 +1,30 @@
 # Changelog
 
+## [1.2.6] - 2026-10-02
+
+### Fixed
+
+- Fixed completion sounds firing when a subagent finished before the main task completed.
+- Subagent completion notifications are now disabled by default and can be enabled separately.
+- Added a separate selectable sound for subagent completions while sharing the main volume setting.
+- Replaced delayed `logs_2.sqlite` polling with real-time Codex rollout JSONL monitoring.
+- Suppressed inherited parent history in subagent rollouts using `subagent_history_start_ordinal`.
+- Suppressed stale pre-startup events and replayed thread/turn events after rollout rewrites or rescans.
+- Fixed main-turn deduplication so separate Codex threads in the same process do not suppress each other.
+
+### Changed
+
+- Completion settings are application-wide and shared across VS Code windows.
+- Near-simultaneous completion sounds are serialized through a playback queue.
+- Automatic settings preview is emitted only by the window that owns the completion monitor.
+- The obsolete SQLite completion monitor has been removed.
+
+### Tested
+
+- Main completion detection measured at roughly 20–50 ms in local rollout tests.
+- Verified three subagent completions plus one main completion with separate sounds.
+- Verified two simultaneous Codex tasks in separate VS Code windows each notify once.
+
 ## [1.2.5] - 2026-09-14
 
 ### Added

@@ -19,15 +19,22 @@
 ## VS Code版
 
 1. ローカルUI Extension Hostで動作
-2. `~/.codex/logs_2.sqlite` を読み取り専用で開く
-3. 起動時点の最大ログIDを開始位置にし、過去の完了イベントを再生しない
-4. `logs` テーブルへ新しく追加された行をローカルで監視
-5. `codex_app_server::outgoing_message` のレコードだけを判定対象にする
-6. `app-server event: turn/started` でUIターン開始、
-   `app-server event: turn/completed` で完了通知
-7. 小さなローカルロックにより複数VS Codeウィンドウからの重複監視・重複再生を防止
-8. PCM16 WAVを指定音量にローカル変換してVS Code global storageへキャッシュ
-9. Windows `winmm.dll / PlaySound` で再生
+2. 1つのVS Codeウィンドウだけが小さな一時ロックを取得し、完了監視担当になる
+3. 監視担当が `~/.codex/sessions`（または設定済み `CODEX_HOME` 配下）の
+   Codex rollout JSONLを監視
+4. 起動時に既存rolloutを現在末尾でseedし、通常起動時に過去完了を再生しない
+5. `fs.watch` で低遅延検出し、周期的な再走査をfallbackとして併用
+6. `task_started` / `turn_started` を開始、
+   `task_complete` / `turn_complete` を完了として正規化
+7. rolloutの `session_meta` からthreadとmain/subagentを判定し、
+   `subagent_history_start_ordinal` より前のsubagent継承履歴を無視
+8. 監視開始前の古いイベントを抑止し、rollout縮小・再書込・再走査でも
+   thread/turn/event単位で再通知を防止
+9. main完了と、設定で有効にしたsubagent完了をそれぞれ選択済み通知音へ振り分け
+   （設定はVS Codeウィンドウ間で共通）
+10. 近い時刻に複数完了した場合は再生キューで順番に処理し、音の重なりによる取りこぼしを防止
+11. PCM16 WAVを指定音量にローカル変換してVS Code global storageへキャッシュ
+12. Windows `winmm.dll / PlaySound` で再生
 
-VS Code版はCodexのローカルApp Serverログ形式に依存します。
-DBスキーマ、target名、ライフサイクルイベント名が変わった場合は更新が必要です。
+VS Code版はCodexのローカルrollout JSONL形式とライフサイクルメタデータに依存します。
+Codex側の形式が変わった場合は検出処理の更新が必要になる可能性があります。

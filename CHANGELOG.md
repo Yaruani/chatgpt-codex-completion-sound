@@ -7,6 +7,28 @@ For detailed component history, see:
 - [Browser extension changelog](browser-extension/CHANGELOG.md)
 - [VS Code extension changelog](vscode-extension/CHANGELOG.md)
 
+## VS Code extension 1.2.6 - 2026-10-02
+
+### Fixed
+
+- Subagent completion no longer triggers the main completion sound.
+- Optional subagent notifications now have a separate sound and are disabled by default.
+- Replaced buffered SQLite lifecycle polling with real-time Codex rollout JSONL monitoring.
+- Inherited subagent history, stale startup history, and replayed rollout events are suppressed.
+- Multiple simultaneous Codex threads are deduplicated independently.
+
+### Changed
+
+- VS Code settings are shared application-wide across windows.
+- Near-simultaneous completion sounds are serialized.
+- The obsolete SQLite completion monitor was removed.
+
+### Verified
+
+- Main completion detection measured in the tens of milliseconds in local testing.
+- Verified 3 subagent completions + 1 main completion.
+- Verified two concurrent Codex tasks in separate VS Code windows each notify once.
+
 ## Browser extension 1.3.2 - 2026-10-01
 
 ### Added

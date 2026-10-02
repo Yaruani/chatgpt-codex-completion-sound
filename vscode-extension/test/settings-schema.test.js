@@ -33,4 +33,19 @@ test("ships native settings schema", () => {
   assert.equal(volume.minimum, 0);
   assert.equal(volume.maximum, 100);
   assert.equal(volume.multipleOf, 5);
+
+  assert.equal(
+    properties["codexCompletionSound.subagentEnabled"].default,
+    false
+  );
+
+  assert.equal(
+    properties["codexCompletionSound.subagentSound"].default,
+    "soft"
+  );
+
+  assert.deepEqual(
+    properties["codexCompletionSound.subagentSound"].enum,
+    properties["codexCompletionSound.sound"].enum
+  );
 });

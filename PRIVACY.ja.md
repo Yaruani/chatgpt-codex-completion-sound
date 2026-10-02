@@ -1,6 +1,6 @@
 # プライバシーポリシー
 
-最終更新: 2026-10-01
+最終更新: 2026-10-02
 
 ## 要約
 
@@ -28,16 +28,17 @@ Completion Sound for ChatGPT & Codex は、個人情報、会話内容、ソー�
 VS Code版は以下の動作を行います。
 
 - VS CodeのローカルUI Extension Hostで動作
-- ローカルのCodex DB `~/.codex/logs_2.sqlite` を読み取り専用で開く
-- Codexの `logs` テーブルに追加された新規行を監視し、
-  App Serverのローカルライフサイクルログから
-  `turn/started` / `turn/completed` を判定
-- Codex DBを変更しない
-- Codexログ内容をアップロード・外部送信・独自保存しない
-- ON/OFF、通知音、音量の設定は通常のVS Code設定に保存
+- `~/.codex/sessions`（または設定済み `CODEX_HOME` 配下）の
+  Codex rollout JSONLをローカル監視
+- セッションメタデータとターンのライフサイクルレコードをローカルで読み取り、
+  main / subagent の完了を判定
+- subagentの継承履歴、拡張起動前の古いイベント、再読込された同一thread/turnイベントを無視
+- Codex rolloutファイルを変更しない
+- Codex rollout内容をアップロード・外部送信・独自永続保存しない
+- 設定は通常のVS Code設定に保存
 - 通知音量を反映した同梱WAVのローカルコピーをVS Codeの
   global storageディレクトリへ保存
-- 複数のVS Codeウィンドウによる重複通知を防ぐため、
+- 複数VS Codeウィンドウによる重複監視・重複通知を防ぐため、
   プロセス情報だけを含む小さな一時ロックファイルをローカルに作成
 - 拡張自身からのネットワーク通信なし
 

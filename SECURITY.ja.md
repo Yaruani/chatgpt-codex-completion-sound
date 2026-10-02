@@ -23,8 +23,10 @@
 - リモートコード実行・外部スクリプト読み込みなし
 - 解析・テレメトリなし
 - ブラウザのホスト権限は `chatgpt.com` のみに限定
-- VS Code版はローカルのCodex `~/.codex/logs_2.sqlite` を読み取り専用で開く
-- VS Code版は `turn/started` / `turn/completed` の判定に必要な
-  Codex App Serverのローカルライフサイクルログのみを利用
+- VS Code版は `~/.codex/sessions`（または `CODEX_HOME` 配下の同等パス）の
+  Codex rollout JSONLをローカルで読み取る
+- main / subagent の完了判定に必要なローカルのセッションメタデータと
+  ターンライフサイクルレコードのみを利用
+- Codex rolloutファイルを変更・外部送信・独自永続保存しない
 - 通知音は拡張に同梱
 - 拡張自身からのネットワーク通信なし

@@ -23,9 +23,11 @@ For non-sensitive bugs, use the public repository issue tracker.
 - No remote code execution or remote script loading.
 - No analytics or telemetry.
 - Browser host access is limited to `chatgpt.com`.
-- The VS Code extension opens the local Codex `~/.codex/logs_2.sqlite`
-  database in read-only mode.
-- The VS Code extension only uses local Codex App Server lifecycle log records
-  needed to detect `turn/started` and `turn/completed`.
+- The VS Code extension locally reads Codex rollout JSONL files under
+  `~/.codex/sessions` (or the corresponding `CODEX_HOME` path).
+- The VS Code extension uses only local session metadata and turn lifecycle
+  records needed to distinguish main and subagent completions.
+- Codex rollout files are not modified, uploaded, or independently persisted by
+  the extension.
 - Notification audio is bundled with the extension.
 - The extensions make no network requests of their own.

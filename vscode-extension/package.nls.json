@@ -9,7 +9,7 @@
   "command.openSettings": "Codex Completion Sound: Open Settings",
   "configuration.title": "Codex Completion Sound",
   "configuration.enabled.description": "Enable completion notification sounds.",
-  "configuration.sound.description": "Notification sound. Changing this setting plays a preview.",
+  "configuration.sound.description": "Main Codex task notification sound. Changing this setting plays a preview.",
   "configuration.sound.chime": "Chime",
   "configuration.sound.bell": "Bell",
   "configuration.sound.double": "Double",
@@ -17,5 +17,7 @@
   "configuration.sound.microwave": "Microwave Ding",
   "configuration.sound.handbell": "Bright Bell",
   "configuration.sound.game": "Game Clear",
-  "configuration.volume.description": "Notification volume from 0 to 100 in 5% steps. Changing this setting plays a preview."
+  "configuration.volume.description": "Notification volume from 0 to 100 in 5% steps. This volume is shared by main and subagent sounds.",
+  "configuration.subagentEnabled.description": "Also play a notification sound when a Codex subagent completes. Disabled by default.",
+  "configuration.subagentSound.description": "Subagent completion notification sound. Changing this setting plays a preview when subagent sounds are enabled."
 }

@@ -7,6 +7,28 @@
 - [ブラウザ版](browser-extension/CHANGELOG.md)
 - [VS Code版](vscode-extension/CHANGELOG.md)
 
+## VS Code版 1.2.6 - 2026-10-02
+
+### 修正
+
+- subagent完了時にmain完了音が鳴る問題を修正
+- subagent通知は既定OFFとし、ONにした場合は専用通知音を選択可能
+- バッファ遅延のあるSQLite監視からCodex rollout JSONLのリアルタイム監視へ変更
+- subagentの継承履歴、起動前の古い履歴、rollout再読込イベントを通知対象外に変更
+- 複数の同時Codex threadをthread/turn単位で独立して重複抑止
+
+### 変更
+
+- VS Code設定をウィンドウ間で共通化
+- 近い時刻に複数完了した場合は通知音を順番に再生
+- 旧SQLite完了監視コードを削除
+
+### 実機確認
+
+- main完了検出はローカル試験で数十ms
+- subagent 3件 + main 1件の通知を確認
+- 別VS CodeウィンドウのCodex 2件を同時実行し、それぞれ1回通知されることを確認
+
 ## ブラウザ版 1.3.2 - 2026-10-01
 
 ### 追加

@@ -33,6 +33,7 @@ all websites.
 VS Code extensions do not use a browser-style permission prompt. The extension
 runs with the local VS Code process permissions.
 
-Its Codex data access is limited by implementation to the local read-only
-database `~/.codex/logs_2.sqlite` (or the corresponding `CODEX_HOME` path), plus
-the extension's own storage and bundled audio assets.
+Its Codex data access is limited by implementation to local rollout JSONL files
+under `~/.codex/sessions` (or the corresponding `CODEX_HOME` path), plus the
+extension's own storage and bundled audio assets. Rollout files are read
+locally and are not modified or transmitted by the extension.

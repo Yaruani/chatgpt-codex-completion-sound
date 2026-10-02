@@ -1,6 +1,6 @@
 # Privacy Policy
 
-Last updated: 2026-10-01
+Last updated: 2026-10-02
 
 ## Summary
 
@@ -30,17 +30,20 @@ The browser extension:
 The VS Code extension:
 
 - Runs locally in the VS Code UI extension host.
-- Opens the local Codex database `~/.codex/logs_2.sqlite` in read-only mode.
-- Polls newly appended rows from the Codex `logs` table and uses local
-  App Server lifecycle records to detect `turn/started` and `turn/completed`.
-- Does not modify the Codex database.
-- Does not upload, transmit, or independently retain Codex log contents.
-- Stores extension preferences (enabled state, sound, and volume) in the
-  user's normal VS Code settings.
+- Watches Codex rollout JSONL files under `~/.codex/sessions` (or the configured
+  `CODEX_HOME` equivalent).
+- Reads session metadata and turn lifecycle records locally to identify main and
+  subagent completions.
+- Ignores inherited subagent history, stale pre-startup events, and replayed
+  thread/turn events.
+- Does not modify Codex rollout files.
+- Does not upload, transmit, or independently persist Codex rollout contents.
+- Stores extension preferences in the user's normal VS Code settings.
 - Stores locally generated volume-scaled copies of bundled notification WAV
   files in the extension's VS Code global storage directory.
 - Uses a small local temporary lock file containing only process information
-  to prevent duplicate notification playback across multiple VS Code windows.
+  to prevent duplicate monitoring and notification playback across VS Code
+  windows.
 - Makes no network requests of its own.
 
 ## Data retention

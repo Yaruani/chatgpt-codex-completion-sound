@@ -6,26 +6,38 @@ VS Code内のCodexで、**UI上のターンが実際に完了したとき**に�
 
 - Chime / Bell / Double / Soft / 電子レンジ風チン / ブライトベル / ゲームクリア風 の7種類
 - 0～100%、5%刻みの音量設定
+- VS Code標準の拡張機能設定画面
+- サブエージェント完了通知のON/OFFと専用通知音
+- 複数VS Codeウィンドウで共通の設定
+- 複数完了が近い場合も通知音を順番に再生
 - テスト再生
 - ON/OFF
 - Windowsでのローカル再生
 
 ## 完了判定
 
-v1.2.4では、rollout JSONLの `task_complete` をUI完了とはみなしません。
+v1.2.6では、Codexのローカルrollout JSONLを監視します。
 
-代わりにCodexのローカルDB `~/.codex/logs_2.sqlite` を**読み取り専用**で監視し、
-App Serverの正式なライフサイクルイベント
+`~/.codex/sessions`
 
-`app-server event: turn/completed`
+追加されたrolloutデータをリアルタイム監視し、旧形式・現行形式の両方の
+ライフサイクル名を認識します。
 
-だけを完了通知として扱います。
+- `task_started` / `turn_started`
+- `task_complete` / `turn_complete`
 
-起動時点の最大ログIDを開始位置にするため、過去イベントは再生しません。
-また、ローカルの単一インスタンスロックにより、複数のVS Codeウィンドウから
-同じ完了音が重複再生されることを防止します。
+main / subagent は rollout の `session_meta` から判定します。
+subagentでは `subagent_history_start_ordinal` より前の継承済み親履歴を無視するため、
+コピーされた過去の完了イベントでは通知しません。
 
-Codexの内容を外部送信・保存しません。
+また、拡張起動前の古いイベントを無視し、rolloutファイルが再走査・再書き込みされた
+場合も同じthread/turnイベントの再通知を抑止します。
+
+ローカルの単一インスタンスロックにより、監視担当はVS Code全体で1ウィンドウだけです。
+その監視担当が共有Codexセッションディレクトリを見るため、複数VS Codeウィンドウで
+別々のCodexを同時実行しても、それぞれの完了を通知できます。
+
+Codex内容を外部送信したり、本拡張が独自に永続保存したりしません。
 
 ## 設定画面
 
@@ -36,9 +48,13 @@ VS Code標準の設定画面を開けます。
 設定画面では以下を変更できます。
 
 - 通知音のON/OFF
-- 通知音の種類
+- main完了時の通知音
 - 音量（0～100%）
-- 音の種類・音量を変更したときの自動プレビュー
+- subagent完了通知のON/OFF
+- subagent専用通知音
+- 音／音量変更時の自動プレビュー
+
+設定はVS Codeウィンドウ間で共通です。
 
 ## コマンド
 
@@ -52,9 +68,12 @@ VS Code標準の設定画面を開けます。
 
 ## 互換性
 
-この版はVS CodeのExtension Hostが `node:sqlite` を提供している必要があります
-（Node.js 22.5以降）。通知音再生は現在Windows対応です。
+通知音再生は現在Windows対応です。
+
+完了判定はCodexのローカルrollout JSONL形式に依存します。
+Codex側で形式やライフサイクルメタデータが変更された場合は、
+検出処理の更新が必要になる可能性があります。
 
 OpenAI非公式であり、OpenAIによる承認・提携を意味しません。
 
-Version: 1.2.5
+Version: 1.2.6

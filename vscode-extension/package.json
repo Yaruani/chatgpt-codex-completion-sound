@@ -2,7 +2,7 @@
   "name": "codex-done-sound",
   "displayName": "%displayName%",
   "description": "%description%",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "publisher": "yaruani",
   "license": "SEE LICENSE IN LICENSE",
   "icon": "images/icon.png",
@@ -81,14 +81,14 @@
         "codexCompletionSound.enabled": {
           "type": "boolean",
           "default": true,
-          "scope": "window",
+          "scope": "application",
           "order": 10,
           "description": "%configuration.enabled.description%"
         },
         "codexCompletionSound.sound": {
           "type": "string",
           "default": "bell",
-          "scope": "window",
+          "scope": "application",
           "order": 20,
           "enum": [
             "chime",
@@ -116,16 +116,48 @@
           "minimum": 0,
           "maximum": 100,
           "multipleOf": 5,
-          "scope": "window",
+          "scope": "application",
           "order": 30,
           "description": "%configuration.volume.description%"
+        },
+        "codexCompletionSound.subagentEnabled": {
+          "type": "boolean",
+          "default": false,
+          "scope": "application",
+          "order": 40,
+          "description": "%configuration.subagentEnabled.description%"
+        },
+        "codexCompletionSound.subagentSound": {
+          "type": "string",
+          "default": "soft",
+          "scope": "application",
+          "order": 50,
+          "enum": [
+            "chime",
+            "bell",
+            "double",
+            "soft",
+            "microwave",
+            "handbell",
+            "game"
+          ],
+          "enumDescriptions": [
+            "%configuration.sound.chime%",
+            "%configuration.sound.bell%",
+            "%configuration.sound.double%",
+            "%configuration.sound.soft%",
+            "%configuration.sound.microwave%",
+            "%configuration.sound.handbell%",
+            "%configuration.sound.game%"
+          ],
+          "description": "%configuration.subagentSound.description%"
         }
       }
     }
   },
   "scripts": {
     "test": "node --test test/*.test.js",
-    "check": "node --check src/extension.js && node --check src/audio.js && node --check src/codex-log-monitor.js && node --check src/wav.js",
+    "check": "node --check src/extension.js && node --check src/audio.js && node --check src/single-instance-lock.js && node --check src/codex-rollout-monitor.js && node --check src/wav.js && node --check src/playback-queue.js",
     "package": "npx --yes @vscode/vsce@latest package"
   }
 }

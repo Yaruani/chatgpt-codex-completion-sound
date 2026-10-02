@@ -9,7 +9,7 @@
   "command.openSettings": "Codex Completion Sound: 設定を開く",
   "configuration.title": "Codex Completion Sound",
   "configuration.enabled.description": "完了通知音のON/OFFを切り替えます。",
-  "configuration.sound.description": "通知音を選択します。変更すると選択した音をプレビュー再生します。",
+  "configuration.sound.description": "メインCodexタスクの完了通知音を選択します。変更するとプレビュー再生します。",
   "configuration.sound.chime": "チャイム",
   "configuration.sound.bell": "ベル",
   "configuration.sound.double": "ダブル",
@@ -17,5 +17,7 @@
   "configuration.sound.microwave": "電子レンジ風チン",
   "configuration.sound.handbell": "ブライトベル",
   "configuration.sound.game": "ゲームクリア風",
-  "configuration.volume.description": "通知音量を0～100%、5%刻みで設定します。変更するとプレビュー再生します。"
+  "configuration.volume.description": "通知音量を0～100%、5%刻みで設定します。メインとサブエージェントで共通です。",
+  "configuration.subagentEnabled.description": "Codexサブエージェントの完了時にも通知音を再生します。既定ではOFFです。",
+  "configuration.subagentSound.description": "サブエージェント完了時の通知音を選択します。サブエージェント通知がONのとき、変更するとプレビュー再生します。"
 }

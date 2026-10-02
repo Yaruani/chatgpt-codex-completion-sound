@@ -17,8 +17,10 @@ This repository contains two independent extensions:
 - Browser extension: popup settings, volume, on/off, test playback, automatic
   preview, multi-conversation tracking, cross-conversation tracking, and
   background-tab notification.
-- VS Code extension: native Extension Settings UI, volume, sound selector,
-  on/off, test command, and automatic preview.
+- VS Code extension: native Extension Settings UI, volume, main/subagent sound
+  selection, optional subagent notifications, on/off, test command, automatic
+  preview, shared settings across windows, and queued playback for
+  near-simultaneous completions.
 - English and Japanese UI/documentation.
 - No analytics, telemetry, ads, accounts, or remote code.
 - No user data is transmitted by either extension.
@@ -75,9 +77,10 @@ The browser extension observes ChatGPT UI state locally and stores only its
 settings in browser local extension storage. Transient conversation paths and
 completion state used for tracking are kept only in extension memory.
 
-The VS Code extension opens `~/.codex/logs_2.sqlite` in read-only mode and
-watches local App Server lifecycle records needed to detect `turn/started` and
-`turn/completed`. It does not upload, retain, or transmit Codex log contents.
+The VS Code extension watches Codex rollout JSONL files under
+`~/.codex/sessions` locally. It uses session metadata and turn lifecycle events
+to distinguish main and subagent completions, ignores inherited/stale/replayed
+history, and does not upload or independently retain Codex rollout contents.
 
 See [PRIVACY.md](PRIVACY.md) for the complete policy.
 

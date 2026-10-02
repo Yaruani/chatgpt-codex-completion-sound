@@ -6,24 +6,38 @@ Plays a local notification sound when a VS Code Codex **UI turn actually complet
 
 - Seven bundled sounds: Chime, Bell, Double, Soft, Microwave Ding, Bright Bell, and Game Clear.
 - 0–100% volume in 5% steps.
+- Native VS Code Extension Settings UI.
+- Optional subagent completion notifications with a separate selectable sound.
+- Shared application-wide settings across VS Code windows.
+- Serialized playback so near-simultaneous completions are heard one after another.
 - Test playback.
 - On/off toggle.
 - Windows local playback.
 
 ## Completion detection
 
-Version 1.2.4 no longer treats rollout JSONL `task_complete` records as UI completion.
+Version 1.2.6 monitors Codex's local rollout JSONL files under:
 
-Instead, it reads Codex's local `~/.codex/logs_2.sqlite` database in **read-only**
-mode and reacts only to the app-server lifecycle event:
+`~/.codex/sessions`
 
-`app-server event: turn/completed`
+The monitor watches appended rollout data in real time and recognizes both legacy and current lifecycle names:
 
-The monitor seeds itself at the current maximum log ID at startup, so historical
-events are never replayed. A local single-instance lock prevents multiple VS Code
-windows from playing the same completion sound.
+- `task_started` / `turn_started`
+- `task_complete` / `turn_complete`
 
-No Codex content is uploaded or retained by this extension.
+Main and subagent sessions are classified from rollout `session_meta`.
+For subagents, inherited parent history before `subagent_history_start_ordinal`
+is ignored, so copied historical completion records do not trigger sounds.
+
+The monitor also suppresses stale events that predate extension startup and
+deduplicates replayed thread/turn events if a rollout file is rewritten or
+rescanned.
+
+A local single-instance lock ensures only one VS Code window owns the monitor.
+That owner watches the shared Codex session directory, so multiple Codex turns
+running in different VS Code windows can each notify correctly.
+
+No Codex content is uploaded or independently retained by this extension.
 
 ## Settings
 
@@ -33,9 +47,13 @@ or run `Codex Completion Sound: Open Settings`.
 The native VS Code settings page provides:
 
 - Enable/disable checkbox.
-- Sound selector.
+- Main completion sound selector.
 - Volume setting from 0–100%.
-- Automatic preview when the sound or volume changes.
+- Optional subagent completion notifications.
+- Separate subagent sound selector.
+- Automatic preview when sound or volume settings change.
+
+Settings are application-wide and shared across VS Code windows.
 
 ## Commands
 
@@ -49,9 +67,12 @@ Open the Command Palette (`Ctrl+Shift+P`) and use:
 
 ## Compatibility
 
-This build requires a VS Code extension-host Node runtime that provides
-`node:sqlite` (Node.js 22.5 or later). Playback is currently Windows-only.
+Notification playback is currently Windows-only.
+
+Completion detection depends on Codex's local rollout JSONL session format.
+If Codex changes that format or lifecycle metadata, the detector may require an
+update.
 
 Unofficial. Not affiliated with or endorsed by OpenAI.
 
-Version: 1.2.5
+Version: 1.2.6

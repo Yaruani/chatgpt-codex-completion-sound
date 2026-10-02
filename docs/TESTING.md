@@ -32,15 +32,28 @@ npm run check
 
 ## VS Code manual test
 
-1. Install the generated VSIX.
-2. Reload VS Code.
-3. Run `Codex Completion Sound: Test Sound`.
-4. Test all seven sounds.
-5. Test 0%, 5%, 65%, and 100% volume.
-6. Change sound and volume in native Extension Settings and confirm automatic
-   preview.
-7. Run a Codex UI task and confirm exactly one sound on
-   `turn/completed`.
-8. Run `Codex Completion Sound: Diagnostics` and confirm the backend is
-   `node:sqlite` and the database is `~/.codex/logs_2.sqlite` (or the
-   configured `CODEX_HOME` equivalent).
+1. Install the generated VSIX and reload all open VS Code windows.
+2. Confirm exactly one window acquires the completion monitor and other windows
+   remain passive.
+3. Wait at least 10 seconds after reload and confirm historical rollout
+   completions do not produce sounds.
+4. Run `Codex Completion Sound: Test Sound`.
+5. Test all seven sounds.
+6. Test volume at 0%, 5%, 65%, and 100%.
+7. Change sound and volume in native Extension Settings and confirm automatic
+   preview occurs only once even with multiple VS Code windows open.
+8. With subagent notifications disabled, run a normal Codex task and confirm
+   exactly one main completion sound.
+9. Confirm the Output log reports `role=main`, the correct thread/turn IDs, and
+   low `lagMs` for the rollout completion.
+10. Enable subagent notifications with a distinct subagent sound. Run a task
+    that creates three subagents and waits for all three before finishing.
+    Confirm three subagent sounds followed by one main sound.
+11. Disable subagent notifications again.
+12. Run separate Codex tasks in two VS Code windows at roughly the same time.
+    Confirm each main thread produces exactly one completion sound.
+13. Confirm near-simultaneous notifications are serialized rather than played
+    over each other.
+14. Run `Codex Completion Sound: Diagnostics` and confirm the backend is
+    `rollout-jsonl` and `sessionsRoot` points to `~/.codex/sessions` (or the
+    configured `CODEX_HOME` equivalent).
